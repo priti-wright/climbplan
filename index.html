@@ -92,7 +92,7 @@ function initialize() {
     var lat = place.geometry.location.A;
     var latShort = lat.toFixed(3);
     var lon = place.geometry.location.F;
-    var lonShort = lat.toFixed(3);
+    var lonShort = lon.toFixed(3);
     var name = place.name.replace('Mt ', 'Mount '); // Google likes to abbreviate this :(
     var nameUrlEncoded = name.replace(' ', '%20');
     document.getElementById('target-summary').innerHTML = (
