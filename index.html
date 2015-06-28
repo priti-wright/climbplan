@@ -85,8 +85,8 @@
 
     ga('create', 'UA-64580382-1', 'auto');
     ga('send', 'pageview');
-    var trackOutboundLink = function(url) {
-      ga('send', 'event', 'outbound', 'click', url);
+    var trackOutboundLink = function(link) {
+      ga('send', 'event', 'outbound', 'click', link.href);
     }
     
 function initialize() {
@@ -104,7 +104,6 @@ function initialize() {
   );
 
   function suggestResearch(place, status) {
-    console.log(place)
     var lat = place.geometry.location.A;
     var latShort = lat.toFixed(3);
     var lon = place.geometry.location.F;
@@ -157,7 +156,7 @@ function initialize() {
       var integrationNote = link.integrated === false ?
           ' (not integrated)' : ''
       researchHtml += '\
-        <a class="site" href='+link.url+' onClick="trackOutboundLink(\''+link.url+'\'); return true;" target="_new">' +
+        <a class="site" href='+link.url+' onClick="trackOutboundLink(this); return true;" target="_new">' +
           link.site + integrationNote +
         '</a>'
     };
