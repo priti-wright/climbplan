@@ -53,6 +53,21 @@
         font-weight: 300;
       }
 
+      #research-suggestions {
+        width: 100%;
+      }
+
+      #research-suggestions .site {
+        margin: 1em;
+        border: 1px solid grey;
+        background-color: lightgrey;
+        padding: 1em;
+        display: inline-block;
+      }
+      #research-suggestions .site a{
+        text-decoration: none;
+      }
+
     </style>
     <title>Hike Planner</title>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>
@@ -73,15 +88,65 @@ function initialize() {
 
   function suggestResearch(place, status) {
     console.log(place)
-    document.getElementById('research-suggestions').innerHTML = (
-      'oh hi there. Looks like you want to climb ' + place.name + ", which is a " + place.types
+    var lat = place.geometry.location.A;
+    var latShort = lat.toFixed(3);
+    var lon = place.geometry.location.F;
+    var lonShort = lat.toFixed(3);
+    var name = place.name.replace('Mt ', 'Mount '); // Google likes to abbreviate this :(
+    var nameUrlEncoded = name.replace(' ', '%20');
+    document.getElementById('target-summary').innerHTML = (
+      'Target: <strong>' + name + "</strong>, <i>" + place.types[0].replace('_', ' ') + "</i> located at (" + lat + ", " + lon + ")"
     )
+
+    var links = [
+      {
+        site: 'Peakbagger (by name)',
+        url: 'http://www.peakbagger.com/search.aspx?tid=M&ss='+nameUrlEncoded+'&lat='+latShort+'&lon='+lonShort
+      },
+      {
+        site: 'Peakbagger (by lat/lon)',
+        url: 'http://www.peakbagger.com/search.aspx?tid=R&ss='+nameUrlEncoded+'&lat='+latShort+'&lon='+lonShort
+      },
+      {
+        site: 'WTA',
+        url: 'http://www.wta.org/go-hiking/trip-reports/tripreport_search?title='+name.replace(' ','+')
+      },
+      {
+        site: 'Weather.gov',
+        url: 'http://forecast.weather.gov/MapClick.php?lon='+lon+'&lat='+lat
+      },
+      {
+        site: 'Mountain-Forecast',
+        url: 'http://www.mountain-forecast.com/peaks/mount-index'+name.replace(' ','-')
+      },
+      {
+        site: 'CalTopo',
+        url: 'http://caltopo.com/map.html#ll='+lat+','+lon+'&z=14&b=t'
+      },
+      {
+        site: 'Cascade Climbers',
+        url: 'http://cascadeclimbers.com/forum/ubbthreads.php/ubb/tripreportsbeta',
+        integrated: false
+      },
+    ];
+
+    var researchHtml = '';
+    for (var i = 0; i < links.length; i++) {
+      var link = links[i];
+      var integrationNote = link.integrated === false ?
+          ' (not integrated)' : ''
+      researchHtml += '\
+        <a class="site" href='+link.url+' target="_new">' +
+          link.site + integrationNote +
+        '</div>'
+    };
+    document.getElementById('research-suggestions').innerHTML = researchHtml
   }
 
   // Create the search box and link it to the UI element.
   var input = /** @type {HTMLInputElement} */(
       document.getElementById('pac-input'));
-  map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
+  map.controls[google.maps.ControlPosition.CENTER].push(input);
 
   var searchBox = new google.maps.places.SearchBox((input));
 
@@ -122,8 +187,9 @@ google.maps.event.addDomListener(window, 'load', initialize);
     </style>
   </head>
   <body>
-    <input id="pac-input" class="controls" type="text" placeholder="Where do you want to go?">
+    <input id="pac-input" class="controls" type="text" placeholder="Which Mountain?">
     <div id="map-canvas"></div>
-    <div id="research-suggestions"></div>
+    <div id="target-summary"></div>
+    <div id="research-suggestions">    </div>
   </body>
 </html>
