@@ -202,6 +202,7 @@ function initialize() {
       map.panBy(0, -80); // So the target's not under the search box
 
       suggestResearch(place);
+      ga('send', 'event', 'search', 'completed', place.place_id);
     }
   });
 
