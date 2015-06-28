@@ -4,12 +4,13 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <style>
-      html, body, #map-canvas {
+      html, body {
         margin: 0px;
-        padding: 0px
+        padding: 0px;
+        Tw Cen MT, Trebuchet MS, sans serif
       }
       #map-canvas {
-        height: 300px;
+        height: 500px;
       }
       .controls {
         margin-top: 16px;
@@ -53,6 +54,10 @@
         font-weight: 300;
       }
 
+      #research-title{
+        width: 100;
+        text-align: center;
+      }
       #research-suggestions {
         width: 100%;
       }
@@ -142,6 +147,7 @@ function initialize() {
         '</a>'
     };
     document.getElementById('research-suggestions').innerHTML = researchHtml;
+    document.getElementById('research-title').innerHTML = '<h1>Research</h1>';
     document.getElementById('footer').innerHTML = '<p>Thanks for playing! Drop me some <a href="https://docs.google.com/document/d/1s91RrNYWmucPVacHv7GkcTUHQmXTvpcIk0xGPHxJZ3A/edit?usp=sharing" target="_new">feedback</a>!</p>'
   }
 
@@ -201,7 +207,8 @@ google.maps.event.addDomListener(window, 'load', initialize);
     <input id="pac-input" class="controls" type="text" placeholder="Which Mountain? (try: Mount Index)">
     <div id="map-canvas"></div>
     <div id="target-summary"></div>
-    <div id="research-suggestions">    </div>
+    <div id="research-title"></div>
+    <div id="research-suggestions"></div>
     <div id="footer"></div>
   </body>
 </html>
