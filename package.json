@@ -1,7 +1,7 @@
 {
-  "name": "yarsk",
+  "name": "hikeplanner",
   "version": "1.0.0",
-  "description": "My React starter kit. Webpack, Babel, Sass, React 0.13 and more.",
+  "description": "Hike planning helper tool.",
   "main": "app/index.js",
   "scripts": {
     "test": "./node_modules/karma/bin/karma start conf/karma.conf.js --single-run",
@@ -12,8 +12,8 @@
     "build": "./node_modules/.bin/webpack --config conf/webpack.production.js",
     "build:gh": "npm run build && node ./build-gh-pages.js && rm -r ./dist"
   },
-  "author": "Brad Daily <brad@bradleyboy.com>",
-  "license": "MIT",
+  "author": "thatneat@github",
+  "license": "All Rights Reserved",
   "dependencies": {
     "react": "~0.13.0"
   },
