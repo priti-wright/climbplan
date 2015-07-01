@@ -159,13 +159,13 @@ function initialize() {
       var integrationNote = link.integrated === false ?
           ' (not integrated)' : ''
       researchHtml += '\
-        <a class="site" href='+link.url+' onClick="trackOutboundLink(this); return true;" target="_new">' +
+        <a class="site" href='+link.url+' onClick="trackOutboundLink(this); return true;" target="_blank">' +
           link.site + integrationNote +
         '</a>'
     };
     document.getElementById('research-suggestions').innerHTML = researchHtml;
     document.getElementById('research-title').innerHTML = '<h1>Research</h1>';
-    document.getElementById('footer').innerHTML = '<p>Thanks for playing! Drop me some <a href="https://docs.google.com/document/d/1s91RrNYWmucPVacHv7GkcTUHQmXTvpcIk0xGPHxJZ3A/edit?usp=sharing" target="_new">feedback</a>!</p>'
+    document.getElementById('footer').innerHTML = '<p>Thanks for playing! Drop me some <a href="https://docs.google.com/document/d/1s91RrNYWmucPVacHv7GkcTUHQmXTvpcIk0xGPHxJZ3A/edit?usp=sharing" target="_blank">feedback</a>!</p>'
   }
 
   // Create the search box and link it to the UI element.
