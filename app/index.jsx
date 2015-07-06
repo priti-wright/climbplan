@@ -8,6 +8,7 @@ import './css/base';
 // require("babel/polyfill");
 
 import React from 'react';
+import Router, {DefaultRoute, Navigation, Route, RouteHandler} from 'react-router';
 import _ from 'lodash';
 import GoogleMapsLoader from 'google-maps';
 
@@ -33,7 +34,7 @@ document.body.innerHTML += '\
 
 initGA();
 
-function newPlace(searchBox, map){
+function newSearchedPlace(searchBox, map){
     var places = searchBox.getPlaces();
 
     if (places.length == 0) {
@@ -58,44 +59,95 @@ function newPlace(searchBox, map){
         map.panBy(0, -80); // So the target's not under the search box
         
         SearchedPlaceStore.updatePlace(place)
-
-        trackSearchComplete(place);
     }
 }
 
+SearchedPlaceStore.subscribeToChanges(trackSearchComplete)
 
-GoogleMapsLoader.LIBRARIES = ['places'];
-GoogleMapsLoader.load(function(google) {
-    var mtIndex = new google.maps.LatLng(47.77, -121.58);
-    var map = new google.maps.Map(
-        document.getElementById('map-canvas'),
-        {
-          disableDefaultUI: true,
-          draggable: true,
-          initialLoc: new google.maps.LatLng(47.77, -121.58),
-          mapTypeId: google.maps.MapTypeId.TERRAIN,
-          center: mtIndex,
-          zoom: initialZoom,
-          scrollwheel: false
+
+
+
+var SearchPage = React.createClass({
+  mixins: [Navigation],
+  updateUrlForPlace (place) {
+      this.setState(this.getUpdatedState())
+      this.transitionTo(`/search/${place.place_id}/${place.namePlussed}`)
+  },
+  componentWillMount () {
+    SearchedPlaceStore.subscribeToChanges(this.updateUrlForPlace)
+
+    GoogleMapsLoader.LIBRARIES = ['places'];
+    GoogleMapsLoader.load(function(google) {
+        var mtIndex = new google.maps.LatLng(47.77, -121.58);
+        var map = new google.maps.Map(
+            document.getElementById('map-canvas'),
+            {
+              disableDefaultUI: true,
+              draggable: true,
+              initialLoc: new google.maps.LatLng(47.77, -121.58),
+              mapTypeId: google.maps.MapTypeId.TERRAIN,
+              center: mtIndex,
+              zoom: initialZoom,
+              scrollwheel: false
+            }
+        );
+
+        // Create the search box and link it to the UI element.
+        var input = /** @type {HTMLInputElement} */(
+          document.getElementById('pac-input'));
+        map.controls[google.maps.ControlPosition.CENTER].push(input);
+
+        var searchBox = new google.maps.places.SearchBox((input));
+        var placesService = new google.maps.places.PlacesService(map);
+        this.setState({
+          searchBox,
+          placesService
+        })
+
+        if(this.props.params.placeId && !SearchedPlaceStore.isLoaded()){
+          placesService.getDetails({placeId: this.props.params.placeId}, (place, status)=>{
+            SearchedPlaceStore.updatePlace(place)
+          })
         }
-    );
 
-    // Create the search box and link it to the UI element.
-    var input = /** @type {HTMLInputElement} */(
-      document.getElementById('pac-input'));
-    map.controls[google.maps.ControlPosition.CENTER].push(input);
+        // Listen for the event fired when the user selects an item from the
+        // pick list. Retrieve the matching place for that item.
+        google.maps.event.addListener(searchBox, 'places_changed', _.partial(newSearchedPlace, searchBox, map));
+    }.bind(this));
+  },
+  getUpdatedState(){
+      return {
+          place: SearchedPlaceStore.getPlace(),
+          searchBox: this.state ? this.state.searchBox : null,
+          placesService: this.state ? this.state.placesService : null
+      }
+  },
+  getInitialState(){
+      return this.getUpdatedState()
+  },
+  render () {
+    return this.state.place?
+      <ResultPanel place={this.state.place}/>
+      : null
+  }
+});
 
-    var searchBox = new google.maps.places.SearchBox((input));
 
-    // Listen for the event fired when the user selects an item from the
-    // pick list. Retrieve the matching place for that item.
-    google.maps.event.addListener(searchBox, 'places_changed', _.partial(newPlace, searchBox, map));
-}.bind(this));
+var routes = (
+  <Route>
+    <Route path="/" handler={SearchPage}/>
+    <Route path="search/:placeId/:placeName" handler={SearchPage}/>
+  </Route>
+)
 
-
-
-React.render(
-    <ResultPanel/>, 
-    document.getElementById('app')
+Router.run(
+  routes,
+  Router.HashLocation,
+  (Root) => {
+    React.render(
+      <Root/>, 
+      document.getElementById('app')
+    )
+  }
 );
 

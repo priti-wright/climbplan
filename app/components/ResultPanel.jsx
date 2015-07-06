@@ -43,45 +43,39 @@ var ResearchSuggestions = React.createClass({
     propTypes: placeProp,
     render(){
         var place = this.props.place;
-        var lat = place.geometry.location.A;
-        var latShort = lat.toFixed(3);
-        var lon = place.geometry.location.F;
-        var lonShort = lon.toFixed(3);
-        var name = place.name.replace('Mt ', 'Mount '); // Google likes to abbreviate this :(
-        var nameUrlEncoded = name.replace(' ', '%20');
 
         var links = [
           {
             site: 'Peakbagger (by name)',
-            url: 'http://www.peakbagger.com/search.aspx?tid=M&ss='+nameUrlEncoded+'&lat='+latShort+'&lon='+lonShort
+            url: `http://www.peakbagger.com/search.aspx?tid=M&ss=${place.nameUrlEncoded}&lat=${place.latShort}&lon=${place.lonShort}`
           },
           {
             site: 'Peakbagger (by lat/lon)',
-            url: 'http://www.peakbagger.com/search.aspx?tid=R&ss='+nameUrlEncoded+'&lat='+latShort+'&lon='+lonShort
+            url: `http://www.peakbagger.com/search.aspx?tid=R&ss=${place.nameUrlEncoded}&lat=${place.latShort}&lon=${place.lonShort}`
           },
           {
             site: 'SummitPost',
-            url: 'http://www.summitpost.org/object_list.php?object_type=1&object_name_1='+name.replace(' ','+')
+            url: `http://www.summitpost.org/object_list.php?object_type=1&object_name_1=${place.namePlussed}`
           },
           {
             site: 'WTA',
-            url: 'http://www.wta.org/go-hiking/trip-reports/tripreport_search?title='+name.replace(' ','+')
+            url: `http://www.wta.org/go-hiking/trip-reports/tripreport_search?title=${place.namePlussed}`
           },
           {
             site: 'Weather.gov',
-            url: 'http://forecast.weather.gov/MapClick.php?lon='+lon+'&lat='+lat
+            url: `http://forecast.weather.gov/MapClick.php?lon=${place.lon}&lat=${place.lat}`
           },
           {
             site: 'Mountain-Forecast',
-            url: 'http://www.mountain-forecast.com/peaks/'+name.replace(' ','-')
+            url: `http://www.mountain-forecast.com/peaks/${place.nameHypenated}`
           },
           {
             site: 'CalTopo',
-            url: 'http://caltopo.com/map.html#ll='+lat+','+lon+'&z=14&b=t'
+            url: `http://caltopo.com/map.html#ll=${place.lat},${place.lon}&z=14&b=t`
           },
           {
             site: 'Cascade Climbers',
-            url: 'http://cascadeclimbers.com/forum/ubbthreads.php/ubb/tripreportsbeta',
+            url: `http://cascadeclimbers.com/forum/ubbthreads.php/ubb/tripreportsbeta`,
             integrated: false
           },
         ];
@@ -107,31 +101,15 @@ var FeedbackMessage = React.createClass({
 })
 
 var ResultPanel = React.createClass({
-    getUpdatedState(){
-        return {
-            place: SearchedPlaceStore.getPlace()
-        }
+    propTypes: {
+        place: React.PropTypes.object.isRequired
     },
-    getInitialState(){
-        return this.getUpdatedState()
-    },
-    updateState(){
-        this.setState(this.getUpdatedState())
-    },
-
-    componentWillMount () {
-        SearchedPlaceStore.subscribeToChanges(this.updateState)
-    },
-    componentWillUnmount () {
-
-    },
-    newPlace () {},
     render () {
-        return _.isUndefined(this.state.place)?
+        return _.isUndefined(this.props.place)?
         <div></div> : <div>
-            <TargetSummary place={this.state.place} />
+            <TargetSummary place={this.props.place} />
             <h1 className="research-title">Research</h1>
-            <ResearchSuggestions place={this.state.place} />
+            <ResearchSuggestions place={this.props.place} />
             <FeedbackMessage/>
         </div>
     }
