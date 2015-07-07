@@ -23,9 +23,6 @@ var closeZoom = 13
 // not sure why the tmpl.html bootstrap doesn't work; let's just bootstrap ourselves in anyway
 document.body.innerHTML += '\
     <title>Hike Planner</title>\
-        <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&libraries=places"></script>\
-        <input id="pac-input" className="controls" type="text" placeholder="Which Mountain? (try: Mount Index)"/>\
-        <div id="map-canvas"></div>\
         <div id="target-summary"></div>\
         <div id="research-title"></div>\
         <div id="research-suggestions"></div>\
@@ -34,6 +31,28 @@ document.body.innerHTML += '\
 
 initGA();
 
+
+function goToPlace(place, map){
+  map.setCenter(place.geometry.location);
+  map.setZoom(closeZoom);
+  new google.maps.Marker({
+      map: map,
+      title: place.name,
+      position: place.geometry.location,
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 30,
+        strokeColor: 'white',
+        strokeOpacity: 0.5,
+        strokeWeight: 10
+      },
+  });
+  map.panBy(0, -80); // So the target's not under the search box
+  
+  SearchedPlaceStore.updatePlace(place)
+}
+
+
 function newSearchedPlace(searchBox, map){
     var places = searchBox.getPlaces();
 
@@ -41,31 +60,33 @@ function newSearchedPlace(searchBox, map){
         map.setZoom(initialZoom);
         return;
     } else {
-        var place = places[0];
-        map.setCenter(place.geometry.location);
-        map.setZoom(closeZoom);
-        new google.maps.Marker({
-            map: map,
-            title: place.name,
-            position: place.geometry.location,
-            icon: {
-              path: google.maps.SymbolPath.CIRCLE,
-              scale: 30,
-              strokeColor: 'white',
-              strokeOpacity: 0.5,
-              strokeWeight: 10
-            },
-        });
-        map.panBy(0, -80); // So the target's not under the search box
-        
-        SearchedPlaceStore.updatePlace(place)
+        goToPlace(places[0], map);
     }
 }
+
 
 SearchedPlaceStore.subscribeToChanges(trackSearchComplete)
 
 
-
+var SearchMap = React.createClass({
+  propTypes: {
+    place: React.PropTypes.object
+  },
+  componentDidMount(){
+    React.findDOMNode(this)
+  },
+  render(){
+    return <div>
+        <input 
+          id="pac-input" 
+          className="controls" 
+          type="text" 
+          placeholder="Which Mountain? (try: Mount Index)"
+        />
+        <div id="map-canvas"></div>
+      </div>
+  }
+})
 
 var SearchPage = React.createClass({
   mixins: [Navigation],
@@ -105,8 +126,10 @@ var SearchPage = React.createClass({
         })
 
         if(this.props.params.placeId && !SearchedPlaceStore.isLoaded()){
+          // Initial page load with a place ID in the URL
           placesService.getDetails({placeId: this.props.params.placeId}, (place, status)=>{
-            SearchedPlaceStore.updatePlace(place)
+            document.getElementById('pac-input').value = place.formatted_address
+            goToPlace(place, map)
           })
         }
 
@@ -126,9 +149,13 @@ var SearchPage = React.createClass({
       return this.getUpdatedState()
   },
   render () {
-    return this.state.place?
+    var resultPanel = this.state.place?
       <ResultPanel place={this.state.place}/>
       : null
+    return <div>
+      <SearchMap place={this.state.place}/>
+      {resultPanel}
+    </div>
   }
 });
 
