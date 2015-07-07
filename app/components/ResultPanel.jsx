@@ -31,7 +31,7 @@ var ResearchLink = React.createClass({
         return <a 
                 href={this.props.url}
                 onClick={onClick}
-                target="_new"
+                target="_blank"
                 className="site"
             >
             {this.props.siteName}
