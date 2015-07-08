@@ -1,7 +1,7 @@
 {
-  "name": "hikeplanner",
+  "name": "climbplan",
   "version": "1.0.0",
-  "description": "Hike planning helper tool.",
+  "description": "Climb planning helper tool.",
   "main": "app/index.js",
   "scripts": {
     "test": "./node_modules/karma/bin/karma start conf/karma.conf.js --single-run",

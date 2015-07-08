@@ -1,4 +1,4 @@
-# Hikeplanner
+# Climbplan
 
 Might fill this in someday.
 
