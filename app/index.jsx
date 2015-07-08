@@ -22,7 +22,7 @@ var closeZoom = 13
 
 // not sure why the tmpl.html bootstrap doesn't work; let's just bootstrap ourselves in anyway
 document.body.innerHTML += '\
-    <title>Hike Planner</title>\
+    <title>Climb Plan</title>\
         <div id="target-summary"></div>\
         <div id="research-title"></div>\
         <div id="research-suggestions"></div>\
