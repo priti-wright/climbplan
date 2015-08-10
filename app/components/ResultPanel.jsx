@@ -10,11 +10,9 @@ var TargetSummary = React.createClass({
     propTypes: placeProp,
     render(){
         var place = this.props.place
-        var lat = place.geometry.location.A;
-        var lon = place.geometry.location.F;
         return <div>
             Target: <strong>{place.name}</strong>, <i>{place.types[0].replace('_', ' ')} </i> 
-            located at ({lat}, {lon})
+            located at ({place.lat}, {place.lon})
         </div>
     }
 })
