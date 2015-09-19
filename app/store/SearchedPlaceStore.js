@@ -20,8 +20,8 @@ var SearchedPlaceStore = {
     updatePlace:(newPlace)=>{
         // Yeah sure this is supposed to go through an event dispatcher. maybe eventually
         var name = newPlace.name.replace('Mt ', 'Mount ') // Google likes to abbreviate this :(
-        var lat = newPlace.geometry.location.G
-        var lon = newPlace.geometry.location.K
+        var lat = newPlace.geometry.location.lat();
+        var lon = newPlace.geometry.location.lng();
         place = _.merge(
             {
                 lat,
