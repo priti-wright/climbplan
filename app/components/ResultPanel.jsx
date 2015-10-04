@@ -2,7 +2,9 @@ import React from 'react';
 import _ from 'lodash';
 
 import SearchedPlaceStore from '../store/SearchedPlaceStore'
-import {trackOutboundLink} from '../ga.js'
+import {trackOutboundLink} from '../ga'
+import get_peakbagger_link from '../sites/peakbagger'
+
 
 var placeProp = {place: React.PropTypes.object.isRequired};
 
@@ -44,12 +46,8 @@ var ResearchSuggestions = React.createClass({
 
         var links = [
           {
-            site: 'Peakbagger (by name)',
-            url: `http://www.peakbagger.com/search.aspx?tid=M&ss=${place.nameUrlEncoded}&lat=${place.latShort}&lon=${place.lonShort}`
-          },
-          {
-            site: 'Peakbagger (by lat/lon)',
-            url: `http://www.peakbagger.com/search.aspx?tid=R&ss=${place.nameUrlEncoded}&lat=${place.latShort}&lon=${place.lonShort}`
+            site: 'Peakbagger',
+            url: get_peakbagger_link(place)
           },
           {
             site: 'SummitPost',

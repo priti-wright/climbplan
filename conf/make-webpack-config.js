@@ -85,6 +85,10 @@ module.exports = function(options) {
           test: /\.jpg$/,
           loader: "file",
         },
+        {
+          test: /\.json$/,
+          loader: "json"
+        }
       ],
     },
     resolve: {
