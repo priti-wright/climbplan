@@ -38,16 +38,20 @@ const ResearchLinkGroup = React.createClass({
 var ResearchLink = React.createClass({
     propTypes: {
         siteName: React.PropTypes.string.isRequired,
+        description: React.PropTypes.string,
         url: React.PropTypes.string.isRequired,
     },
     render(){
         const onClick = () => trackOutboundLink(this.props.url);
+        const descriptionProps = this.props.description ?
+            {title: this.props.description} : {}
         return <li>
             <a 
                 href={this.props.url}
                 onClick={onClick}
                 target="_blank"
                 className="site"
+                {...descriptionProps}
             >
                 {this.props.siteName}
             </a>
@@ -68,36 +72,43 @@ var ResearchSuggestions = React.createClass({
           {
             site: 'Peakbagger',
             category: betaTrsCategory,
+            description: 'Short trip reports in a database of peak info. GPS Tracks often available.',
             url: get_peakbagger_link(place)
           },
           {
             site: 'SummitPost',
             category: betaTrsCategory,
+            description: 'Curated mountain and route descriptions written by experts.',
             url: `http://www.summitpost.org/object_list.php?object_type=1&object_name_1=${place.namePlussed}`
           },
           {
-            site: 'WTA',
+            site: 'Washington Trails',
             category: betaTrsCategory,
+            description: 'Trip reports and route descriptions generally aimed at hikers rather than mountain climbers.',
             url: `http://www.wta.org/go-hiking/trip-reports/tripreport_search?title=${place.namePlussed}`
           },
           {
             site: 'Weather.gov',
             category: weatherCategory,
+            description: 'Detailed weather reports and graphs pinpointed to your peak\'s location.',
             url: `http://forecast.weather.gov/MapClick.php?lon=${place.lon}&lat=${place.lat}`
           },
           {
             site: 'Mountain-Forecast',
             category: weatherCategory,
+            description: 'Peak-specific weather reports with forecasts at various altitudes.',
             url: `http://www.mountain-forecast.com/peaks/${place.nameHypenated}`
           },
           {
             site: 'CalTopo',
             category: mapsCategory,
+            description: 'Swiss army knife of online mapping software - has slope-angle overlays, simulated point-of-view generation, and the best printing abilities.',
             url: `http://caltopo.com/map.html#ll=${place.lat},${place.lon}&z=14&b=t`
           },
           {
             site: 'Cascade Climbers',
             category: betaTrsCategory,
+            description: 'Trip reports and beta site frequented by intermediate to advanced climbers in the cascades. Link goes to search page.',
             url: `http://cascadeclimbers.com/forum/ubbthreads.php/ubb/tripreportsbeta`,
             integrated: false
           },
@@ -113,7 +124,12 @@ var ResearchSuggestions = React.createClass({
                     {_.map(
                         groupLinks,
                         function(link){
-                            return <ResearchLink siteName={link.site} url={link.url} key={link.site + link.url}/>;
+                            return <ResearchLink
+                                siteName={link.site}
+                                url={link.url}
+                                description={link.description}
+                                key={link.site + link.url}
+                            />;
                         }
                     )}
                 </ResearchLinkGroup>;
