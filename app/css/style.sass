@@ -47,31 +47,35 @@ html, body
 
 .research-suggestions
   width: 100%;
+  a.site
+    margin-right: 1em;
+    border-bottom: 3px solid grey;
+    background-color: lightgrey;
+    padding: 1em;
+    display: inline-block;
+    text-decoration: none;
+    font-weight: bold;
+  a.site:hover
+    background-color: grey;
+  a.site:active
+    background-color: grey;
+    border-bottom-color: lightgrey;
 
 
-.research-suggestions a.site
-  margin-right: 1em;
-  border-bottom: 3px solid grey;
-  background-color: lightgrey;
-  padding: 1em;
-  display: inline-block;
-  text-decoration: none;
-  font-weight: bold;
+  .research-link-group
+    background-color: hsla(113, 100%, 85%, 1);
 
-.research-link-group
-  background-color: hsla(113, 100%, 85%, 1);
+    h3
+      display: inline-block;
+      width: 200px;
+      text-align: right;
 
-.research-link-group:nth-child(even)
-  background-color: hsla(113, 100%, 78%, 1);
+    ul
+      list-style-type: none;
+      display: inline-block;
 
-.research-link-group h3
-  display: inline-block;
-  width: 200px;
-  text-align: right;
+      li
+        display: inline-block;
 
-.research-link-group ul
-  list-style-type: none;
-  display: inline-block;
-
-.research-link-group ul li
-  display: inline-block;
+  .research-link-group:nth-child(even)
+    background-color: hsla(113, 100%, 78%, 1);
