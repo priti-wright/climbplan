@@ -11,6 +11,7 @@ import React from 'react';
 import Router, {DefaultRoute, Navigation, Route, RouteHandler} from 'react-router';
 import _ from 'lodash';
 import GoogleMapsLoader from 'google-maps';
+import $ from 'jquery';
 
 import ResultPanel from './components/ResultPanel.jsx'
 import SearchedPlaceStore from './store/SearchedPlaceStore'
@@ -31,6 +32,33 @@ document.body.innerHTML += '\
 
 initGA();
 
+function addGpsTrack(googleMaps, map, trackUrl){
+  $.ajax({
+    type: "GET",
+    url: trackUrl,
+    dataType: "xml",
+    success: function(xml) {
+      var points = [];
+      var bounds = new googleMaps.LatLngBounds ();
+      $(xml).find("trkpt").each(function() {
+        var lat = $(this).attr("lat");
+        var lon = $(this).attr("lon");
+        var p = new googleMaps.LatLng(lat, lon);
+        points.push(p);
+        bounds.extend(p);
+      });
+
+      var poly = new googleMaps.Polyline({
+        path: points,
+        strokeColor: "#FF00AA",
+        strokeOpacity: .5,
+        strokeWeight: 1.5
+      });
+      
+      poly.setMap(map);
+    }
+  });
+}
 
 function goToPlace(place, map){
   map.setCenter(place.geometry.location);
@@ -73,15 +101,18 @@ var SearchMap = React.createClass({
     place: React.PropTypes.object
   },
   componentDidMount(){
-    React.findDOMNode(this)
+    console.log('SearchMap mounted!');
+    React.findDOMNode(this.refs.placesSearch).focus();
   },
   render(){
     return <div>
         <input 
           id="pac-input" 
+          ref="placesSearch"
           className="controls" 
           type="text" 
           placeholder="Which Mountain? (try: Mount Index)"
+          autoFocus={true}
         />
         <div id="map-canvas"></div>
       </div>
@@ -93,6 +124,9 @@ var SearchPage = React.createClass({
   updateUrlForPlace (place) {
       this.setState(this.getUpdatedState())
       this.transitionTo(`/search/${place.place_id}/${place.namePlussed}`)
+  },
+  componentDidMount(){
+    document.getElementById('pac-input').focus();
   },
   componentWillMount () {
     SearchedPlaceStore.subscribeToChanges(this.updateUrlForPlace)
@@ -114,8 +148,7 @@ var SearchPage = React.createClass({
         );
 
         // Create the search box and link it to the UI element.
-        var input = /** @type {HTMLInputElement} */(
-          document.getElementById('pac-input'));
+        var input = document.getElementById('pac-input');
         map.controls[google.maps.ControlPosition.CENTER].push(input);
 
         var searchBox = new google.maps.places.SearchBox((input));
@@ -136,6 +169,14 @@ var SearchPage = React.createClass({
         // Listen for the event fired when the user selects an item from the
         // pick list. Retrieve the matching place for that item.
         google.maps.event.addListener(searchBox, 'places_changed', _.partial(newSearchedPlace, searchBox, map));
+
+        addGpsTrack(google.maps, map, 'DragontailPeak1996-09-22.gpx');
+        addGpsTrack(google.maps, map, 'DragontailPeak2010-05-30.gpx');
+        addGpsTrack(google.maps, map, 'DragontailPeak2013-06-15.gpx');
+        addGpsTrack(google.maps, map, 'DragontailPeak2014-07-12.gpx');
+        addGpsTrack(google.maps, map, 'DragontailPeak2015-03-01.gpx');
+        addGpsTrack(google.maps, map, 'DragontailPeak2015-05-30.gpx');
+
     }.bind(this));
   },
   getUpdatedState(){
