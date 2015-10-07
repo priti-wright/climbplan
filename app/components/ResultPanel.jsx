@@ -25,9 +25,7 @@ var ResearchLink = React.createClass({
         url: React.PropTypes.string.isRequired,
     },
     render(){
-        function onClick(){
-            trackOutboundLink(this); return true;
-        }
+        const onClick = () => trackOutboundLink(this.props.url);
         return <a 
                 href={this.props.url}
                 onClick={onClick}

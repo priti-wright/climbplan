@@ -10,7 +10,7 @@ export function initGA(){
 }
 
 export function trackOutboundLink(link){
-  ga('send', 'event', 'outbound', 'click', link.href);
+  ga('send', 'event', 'outbound', 'click', link);
 }
 
 export function trackSearchComplete(place){
