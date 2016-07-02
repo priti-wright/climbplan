@@ -5,7 +5,7 @@ html, body
   font-family: Tw Cen MT, Trebuchet MS, sans serif
 
 #map-canvas
-  height: 500px;
+  height: 200px;
 
 .controls
   margin-top: 16px;
@@ -37,7 +37,7 @@ html, body
   font-family: Roboto;
 
 
-.research-title
+.section-title
   width: 100%;
   text-align: center;
   background-color: hsla(113, 50%, 90%, 1);
@@ -45,7 +45,7 @@ html, body
   border-bottom: 4px solid grey;
   padding: .2em;
 
-.research-suggestions
+.research-suggestions, .trip-reports
   width: 100%;
   a.site
     margin-right: 1em;
@@ -77,5 +77,11 @@ html, body
       li
         display: inline-block;
 
-  .research-link-group:nth-child(even)
+  .trip-report-result
+    background-color: hsla(113, 100%, 90%, 1);
+    padding: .5em;
+    padding-left: 1em;
+
+  .research-link-group:nth-child(even), .trip-report-result:nth-child(even)
     background-color: hsla(113, 100%, 78%, 1);
+

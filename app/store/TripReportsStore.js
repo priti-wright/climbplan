@@ -4,14 +4,30 @@ import {subscribeToChanges} from './SearchedPlaceStore.js'
 
 var tripReports = [];
 var listeners = new Set([]);
+const updateListeners = (tripReports) => listeners.forEach(function(listener){listener(tripReports)});
+
+const statusNoRequest = {};
+const statusSearching = {};
+const statusLoaded = {};
+
 var loaded = false;
+var status = statusNoRequest;
 
-const API_URL = 'http://www.google.com/'
+const trfindURL = 'https://trfind.herokuapp.com/find';
 
-var TripReportsStore = {
-    isLoaded:()=>{
-        return loaded
-    },
+const prepTripReport = (report) => {
+    return _.merge(
+        {},
+        report,
+        {
+            date: new Date(report.date),
+        }
+    );
+};
+
+const TripReportsStore = {
+    getStatus:()=>status,
+    isLoaded:()=>status === statusLoaded,
     getTripReports:()=>{
         return tripReports
     },
@@ -22,31 +38,28 @@ var TripReportsStore = {
         listeners.delete(callback);
     },
     updatePlace:(newPlace)=>{
-        const dummyDate = new Date;
-        tripReports = [
-            {
-                site: 'Ali Baba',
-                link: 'www.example.com',
-                date: dummyDate,
-                title: null,
-                route: 'Fire Falls',
-                has_gps: null,
-                has_photos: null,
-            },
-            {
-                site: 'The Googles',
-                link: 'www.google.com',
-                date: dummyDate,
-                title: 'Mount Dooooom',
-                route: 'The Scary Cleaver',
-                has_gps: true,
-                has_photos: true,
+        console.log('Searching for', newPlace);
+        status = statusSearching;
+        updateListeners(tripReports);
+
+        const {name, lat, lon} = newPlace;
+        const placeRequest = {data: {name, lat, lon}};
+        const request = new XMLHttpRequest();
+        request.open('POST', trfindURL, true);
+        request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+
+        request.onreadystatechange = function () {
+            const DONE = this.DONE || 4;
+            if (this.readyState === DONE){
+                tripReports = JSON.parse(this.responseText).data.map(prepTripReport);
+                console.log('Found trip reports:', tripReports);
+                status === statusLoaded;
+                updateListeners(tripReports);
             }
-        ]
-        loaded = true;
-        listeners.forEach(function(listener){listener(place)})
+        };
+        request.send(JSON.stringify(placeRequest));
     }
 }
 
-subscribeToChanges(TripReportsStore.updatePlace)
+subscribeToChanges(TripReportsStore.updatePlace);
 export default TripReportsStore

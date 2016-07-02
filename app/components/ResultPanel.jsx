@@ -160,9 +160,9 @@ var ResultPanel = React.createClass({
         return _.isUndefined(this.props.place)?
         <div></div> : <div>
             <TargetSummary place={this.props.place} />
-            <TripReportResults />
-            <h1 className="research-title">Research</h1>
+            <h1 className="section-title">Research</h1>
             <ResearchSuggestions place={this.props.place} />
+            <TripReportResults />
             <FeedbackMessage/>
         </div>
     }

@@ -13,9 +13,9 @@ import _ from 'lodash';
 import GoogleMapsLoader from 'google-maps';
 
 import ResultPanel from './components/ResultPanel.jsx'
-import SearchedPlaceStore from './store/SearchedPlaceStore'
+import SearchedPlaceStore from './store/SearchedPlaceStore';
+import TripReportsStore from './store/TripReportsStore'
 import {initGA, trackOutboundLink, trackSearchComplete} from './ga.js'
-
 
 var initialZoom = 8;
 var closeZoom = 13
@@ -94,8 +94,12 @@ var SearchPage = React.createClass({
       this.setState(this.getUpdatedState())
       this.transitionTo(`/search/${place.place_id}/${place.namePlussed}`)
   },
+  updateTripReports (place) {
+      this.setState(this.getUpdatedState())
+  },
   componentWillMount () {
-    SearchedPlaceStore.subscribeToChanges(this.updateUrlForPlace)
+    SearchedPlaceStore.subscribeToChanges(this.updateUrlForPlace);
+    TripReportsStore.subscribeToChanges(this.updateTripReports);
 
     GoogleMapsLoader.LIBRARIES = ['places'];
     GoogleMapsLoader.load(function(google) {
@@ -141,6 +145,8 @@ var SearchPage = React.createClass({
   getUpdatedState(){
       return {
           place: SearchedPlaceStore.getPlace(),
+          tripReports: TripReportsStore.getTripReports(),
+          tripReportsStatus: TripReportsStore.getStatus(),
           searchBox: this.state ? this.state.searchBox : null,
           placesService: this.state ? this.state.placesService : null
       }
@@ -150,7 +156,7 @@ var SearchPage = React.createClass({
   },
   render () {
     var resultPanel = this.state.place?
-      <ResultPanel place={this.state.place}/>
+      <ResultPanel place={this.state.place} tripReports tripReportsStatus/>
       : null
     return <div>
       <SearchMap place={this.state.place}/>
