@@ -16,12 +16,7 @@ const tripReportProp = React.PropTypes.shape({
 }).isRequired;
 
 const reportMightBeUseful = (tripReport) => {
-    const hasTitleOrRoute = (
-        tripReport.title ||
-        // TODO issue #2 : PeakBagger results sometimes just have a space character for a route
-        (tripReport.route && tripReport.route != '&nbsp;')
-    );
-    return tripReport.has_gps || tripReport.has_photos || hasTitleOrRoute;
+    return tripReport.has_gps || tripReport.has_photos || tripReport.title || tripReport.route;
 }
 
 const padTwodigits = (num) => {
@@ -35,7 +30,7 @@ const TripReportLink = React.createClass({
     render(){
         const report = this.props.report;
         const onClick = () => trackOutboundLink(report.link);
-        const headline = (report.title && report.route) ? 
+        const headline = (report.title && report.route) ?
             `${report.title} | ${report.route}` : report.title || report.route;
         const headlineElement = <span className="trip-report-headline">{headline}</span>;
         const {date} = report;
