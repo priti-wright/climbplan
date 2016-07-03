@@ -51,7 +51,9 @@ const TripReportsStore = {
         request.onreadystatechange = function () {
             const DONE = this.DONE || 4;
             if (this.readyState === DONE){
-                tripReports = JSON.parse(this.responseText).data.map(prepTripReport);
+                tripReports = _(
+                    JSON.parse(this.responseText).data.map(prepTripReport)
+                ).sortBy('date').reverse().value();
                 console.log('Found trip reports:', tripReports);
                 status === statusLoaded;
                 updateListeners(tripReports);
