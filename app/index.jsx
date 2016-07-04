@@ -47,6 +47,7 @@ function goToPlace(place, map){
         strokeWeight: 10
       },
   });
+  map.panBy(0, -65); // So the target's not under the search box
   
   SearchedPlaceStore.updatePlace(place)
 }
