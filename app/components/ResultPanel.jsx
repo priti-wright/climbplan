@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 
+import TripReportResults from './TripReportResults'
 import SearchedPlaceStore from '../store/SearchedPlaceStore'
 import {trackOutboundLink} from '../ga'
 import get_peakbagger_link from '../sites/peakbagger'
@@ -159,8 +160,9 @@ var ResultPanel = React.createClass({
         return _.isUndefined(this.props.place)?
         <div></div> : <div>
             <TargetSummary place={this.props.place} />
-            <h1 className="research-title">Research</h1>
+            <h1 className="section-title">Research</h1>
             <ResearchSuggestions place={this.props.place} />
+            <TripReportResults />
             <FeedbackMessage/>
         </div>
     }
