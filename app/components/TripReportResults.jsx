@@ -38,13 +38,14 @@ const TripReportLink = React.createClass({
         const photoElement = report.has_photos ? <span className="has-photos" title="Photos">📷</span> : <span className="no-photos"/>;
         const gpsElement = report.has_gps ? <span className="has-gps" title="GPS track">🛰</span> : <span className="no-gps"/>;
 
-        return <div className="trip-report-result">
+        return <li className="trip-report-result">
             <a href={report.link} onClick={onClick} target="_blank" title={headline}>
                 {dateElement}{headlineElement} {photoElement}{gpsElement}{siteElement}
             </a>
-        </div>
+        </li>
     }
 });
+
 
 const TripReportResults = React.createClass({
     propTypes: {
@@ -73,11 +74,11 @@ const TripReportResults = React.createClass({
             }
         )
 
-        return <div className="research-suggestions">
+        return <div className="trip-reports">
             <h1 className="section-title">Trip Reports</h1>
             {noInputInfo}
             {loadedInfo}
-            {reportLinks}
+            <ul>{reportLinks}</ul>
             {loadingIndicator}
         </div>
     }

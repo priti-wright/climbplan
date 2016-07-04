@@ -4,7 +4,6 @@ import _ from 'lodash';
 import TripReportResults from './TripReportResults'
 import SearchedPlaceStore from '../store/SearchedPlaceStore'
 import {trackOutboundLink} from '../ga'
-import get_peakbagger_link from '../sites/peakbagger'
 
 
 var placeProp = React.PropTypes.object;
@@ -60,7 +59,7 @@ var ResearchLink = React.createClass({
     }
 })
 
-const betaTrsCategory = 'Beta & Trip Reports';
+const routeDescriptions = 'Route Descriptions';
 const mapsCategory = 'Maps';
 const weatherCategory = 'Weather';
 
@@ -70,6 +69,18 @@ var ResearchSuggestions = React.createClass({
         var place = this.props.place;
 
         var links = [
+          {
+            site: 'SummitPost',
+            category: routeDescriptions,
+            description: 'Curated mountain and route descriptions written by experts.',
+            url: `http://www.summitpost.org/object_list.php?object_type=1&object_name_1=${place.namePlussed}`
+          },
+          {
+            site: 'Washington Trails',
+            category: routeDescriptions,
+            description: 'Trip reports and route descriptions generally aimed at hikers rather than mountain climbers.',
+            url: `http://www.wta.org/go-hiking/hikes/hike_search?title=${place.namePlussed}`
+          },
           {
             site: 'Weather.gov',
             category: weatherCategory,
@@ -87,6 +98,12 @@ var ResearchSuggestions = React.createClass({
             category: mapsCategory,
             description: 'Swiss army knife of online mapping software - has slope-angle overlays, simulated point-of-view generation, and the best printing abilities.',
             url: `http://caltopo.com/map.html#ll=${place.lat},${place.lon}&z=14&b=t`
+          },
+          {
+            site: 'Google',
+            category: mapsCategory,
+            description: 'The search juggernaut\'s mapping software. Has a crude topographic view, but driving directions are really where it shines.',
+            url: `https://www.google.com/maps/place/${place.formatted_address}/@${place.lat},${place.lon},12z/data=!5m1!1e4`
           },
         ];
         const groups = _.groupBy(
