@@ -1,7 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
 
-import TripReportsStore from '../store/TripReportsStore'
+import loadingIndicatorImage from '../static/loadingIndicator.gif'
+import TripReportsStore, {
+    statusNoInput,
+    statusLoaded,
+    statusSearching
+} from '../store/TripReportsStore'
 import {trackOutboundLink} from '../ga'
 
 
@@ -48,8 +53,25 @@ const TripReportLink = React.createClass({
 });
 
 const TripReportResults = React.createClass({
+    propTypes: {
+        tripReports: React.PropTypes.arrayOf(tripReportProp).isRequired,
+        tripReportsStatus: React.PropTypes.string.isRequired,
+    },
     render(){
-        const reports = TripReportsStore.getTripReports();
+        const status = this.props.tripReportsStatus;
+
+        const loadingIndicator = (status == statusSearching) ?
+            <div className="trip-reports-loading-indicator">
+                Searching Peakbagger, SummitPost and CascadeClimbers...
+                <br/>
+                <img src={loadingIndicatorImage}></img>
+            </div> : null
+        const loadedInfo = (status == statusLoaded) ?
+            <span>From Peakbagger, SummitPost and Cascade Climbers search</span> : null;
+        const noInputInfo = (status == statusNoInput) ?
+            <span>Enter a mountain name in the search bar to fetch reports!</span> : null
+
+        const reports = this.props.tripReports;
         const reportLinks = _.map(
             reports.filter(reportMightBeUseful),
             (report) => {
@@ -59,10 +81,23 @@ const TripReportResults = React.createClass({
 
         return <div className="research-suggestions">
             <h1 className="section-title">Trip Reports</h1>
-            From Peakbagger, SummitPost and Cascade Climbers search
+            {noInputInfo}
+            {loadedInfo}
             {reportLinks}
+            {loadingIndicator}
         </div>
     }
 })
 
-export default TripReportResults;
+
+
+const TripReportResultsWrapper = React.createClass({
+    render(){
+        return <TripReportResults
+            tripReports={TripReportsStore.getTripReports()}
+            tripReportsStatus={TripReportsStore.getStatus()}
+        />
+    }
+});
+
+export default TripReportResultsWrapper;

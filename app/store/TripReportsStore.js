@@ -6,12 +6,12 @@ var tripReports = [];
 var listeners = new Set([]);
 const updateListeners = (tripReports) => listeners.forEach(function(listener){listener(tripReports)});
 
-const statusNoRequest = {};
-const statusSearching = {};
-const statusLoaded = {};
+const statusNoInput = '__no input__';
+const statusSearching = '__searching__';
+const statusLoaded = '__loaded__';
 
 var loaded = false;
-var status = statusNoRequest;
+var status = statusNoInput;
 
 const trfindURL = 'https://trfind.herokuapp.com/find';
 
@@ -40,6 +40,7 @@ const TripReportsStore = {
     updatePlace:(newPlace)=>{
         console.log('Searching for', newPlace);
         status = statusSearching;
+        tripReports = [];
         updateListeners(tripReports);
 
         const {name, lat, lon} = newPlace;
@@ -55,7 +56,7 @@ const TripReportsStore = {
                     JSON.parse(this.responseText).data.map(prepTripReport)
                 ).sortBy('date').reverse().value();
                 console.log('Found trip reports:', tripReports);
-                status === statusLoaded;
+                status = statusLoaded;
                 updateListeners(tripReports);
             }
         };
@@ -65,3 +66,8 @@ const TripReportsStore = {
 
 subscribeToChanges(TripReportsStore.updatePlace);
 export default TripReportsStore
+export {
+    statusNoInput,
+    statusLoaded,
+    statusSearching
+};
