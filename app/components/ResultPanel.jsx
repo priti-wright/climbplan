@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 
+import ReactTooltip from 'react-tooltip';
 import TripReportResults from './TripReportResults'
 import SearchedPlaceStore from '../store/SearchedPlaceStore'
 import {trackOutboundLink} from '../ga'
@@ -44,7 +45,9 @@ var ResearchLink = React.createClass({
     render(){
         const onClick = () => trackOutboundLink(this.props.url);
         const descriptionProps = this.props.description ?
-            {title: this.props.description} : {}
+            {
+                "data-tip": this.props.description
+            } : {}
         return <li>
             <a 
                 href={this.props.url}
@@ -131,6 +134,7 @@ var ResearchSuggestions = React.createClass({
 
         return <div className="research-suggestions">
             {groupElements}
+            <ReactTooltip place="bottom" type="light" effect="solid"/>
         </div>
     }
 })
