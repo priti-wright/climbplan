@@ -24,12 +24,6 @@ const reportMightBeUseful = (tripReport) => {
     return tripReport.has_gps || tripReport.has_photos || tripReport.title || tripReport.route;
 }
 
-const padTwodigits = (num) => {
-    const str = num.toString();
-    return (str.length > 1)?
-        str : `0${str}`;
-}
-
 const TripReportLink = React.createClass({
     propTypes: {report: tripReportProp},
     render(){
@@ -39,7 +33,7 @@ const TripReportLink = React.createClass({
             `${report.title} | ${report.route}` : report.title || report.route;
         const headlineElement = <span className="trip-report-headline">{headline}</span>;
         const {date} = report;
-        const dateElement = <span className="trip-report-date">{date.getFullYear()}-{padTwodigits(date.getMonth())}-{padTwodigits(date.getDate())}</span>;
+        const dateElement = <span className="trip-report-date">{date.toISOString().slice(0, 10)}</span>;
         const siteElement = <span className="trip-report-site">{report.site}</span>;
         const photoElement = report.has_photos ? <span className="has-photos" title="Photos">📷</span> : <span className="no-photos"/>;
         const gpsElement = report.has_gps ? <span className="has-gps" title="GPS track">🛰</span> : <span className="no-gps"/>;
