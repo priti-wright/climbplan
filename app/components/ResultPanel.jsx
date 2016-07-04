@@ -7,10 +7,10 @@ import {trackOutboundLink} from '../ga'
 import get_peakbagger_link from '../sites/peakbagger'
 
 
-var placeProp = {place: React.PropTypes.object.isRequired};
+var placeProp = React.PropTypes.object;
 
 var TargetSummary = React.createClass({
-    propTypes: placeProp,
+    propTypes: {place: placeProp.isRequired},
     render(){
         var place = this.props.place
         return <div>
@@ -65,29 +65,11 @@ const mapsCategory = 'Maps';
 const weatherCategory = 'Weather';
 
 var ResearchSuggestions = React.createClass({
-    propTypes: placeProp,
+    propTypes: {place: placeProp},
     render(){
         var place = this.props.place;
 
         var links = [
-          {
-            site: 'Peakbagger',
-            category: betaTrsCategory,
-            description: 'Short trip reports in a database of peak info. GPS Tracks often available.',
-            url: get_peakbagger_link(place)
-          },
-          {
-            site: 'SummitPost',
-            category: betaTrsCategory,
-            description: 'Curated mountain and route descriptions written by experts.',
-            url: `http://www.summitpost.org/object_list.php?object_type=1&object_name_1=${place.namePlussed}`
-          },
-          {
-            site: 'Washington Trails',
-            category: betaTrsCategory,
-            description: 'Trip reports and route descriptions generally aimed at hikers rather than mountain climbers.',
-            url: `http://www.wta.org/go-hiking/trip-reports/tripreport_search?title=${place.namePlussed}`
-          },
           {
             site: 'Weather.gov',
             category: weatherCategory,
@@ -105,13 +87,6 @@ var ResearchSuggestions = React.createClass({
             category: mapsCategory,
             description: 'Swiss army knife of online mapping software - has slope-angle overlays, simulated point-of-view generation, and the best printing abilities.',
             url: `http://caltopo.com/map.html#ll=${place.lat},${place.lon}&z=14&b=t`
-          },
-          {
-            site: 'Cascade Climbers',
-            category: betaTrsCategory,
-            description: 'Trip reports and beta site frequented by intermediate to advanced climbers in the cascades. Link goes to search page.',
-            url: `http://cascadeclimbers.com/forum/ubbthreads.php/ubb/tripreportsbeta`,
-            integrated: false
           },
         ];
         const groups = _.groupBy(
@@ -154,15 +129,19 @@ var FeedbackMessage = React.createClass({
 
 var ResultPanel = React.createClass({
     propTypes: {
-        place: React.PropTypes.object.isRequired
+        place: React.PropTypes.object
     },
     render () {
+        // These element(s) work even if place is not present.
+        const stuffToShowEvenIfPlaceNotPresent = <span>
+            <TripReportResults />
+        </span>;
         return _.isUndefined(this.props.place)?
-        <div></div> : <div>
+        stuffToShowEvenIfPlaceNotPresent : <div>
             <TargetSummary place={this.props.place} />
             <h1 className="section-title">Research</h1>
             <ResearchSuggestions place={this.props.place} />
-            <TripReportResults />
+            {stuffToShowEvenIfPlaceNotPresent}
             <FeedbackMessage/>
         </div>
     }

@@ -123,6 +123,7 @@ var SearchPage = React.createClass({
         map.controls[google.maps.ControlPosition.CENTER].push(input);
 
         var searchBox = new google.maps.places.SearchBox((input));
+        searchBox.setBounds(map.getBounds()); // Bias towards viewport
         var placesService = new google.maps.places.PlacesService(map);
         this.setState({
           searchBox,
@@ -145,8 +146,6 @@ var SearchPage = React.createClass({
   getUpdatedState(){
       return {
           place: SearchedPlaceStore.getPlace(),
-          tripReports: TripReportsStore.getTripReports(),
-          tripReportsStatus: TripReportsStore.getStatus(),
           searchBox: this.state ? this.state.searchBox : null,
           placesService: this.state ? this.state.placesService : null
       }
@@ -155,12 +154,9 @@ var SearchPage = React.createClass({
       return this.getUpdatedState()
   },
   render () {
-    var resultPanel = this.state.place?
-      <ResultPanel place={this.state.place} tripReports tripReportsStatus/>
-      : null
     return <div>
       <SearchMap place={this.state.place}/>
-      {resultPanel}
+      <ResultPanel place={this.state.place}/>
     </div>
   }
 });
