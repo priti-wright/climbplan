@@ -47,7 +47,6 @@ function goToPlace(place, map){
         strokeWeight: 10
       },
   });
-  map.panBy(0, -80); // So the target's not under the search box
   
   SearchedPlaceStore.updatePlace(place)
 }
@@ -81,7 +80,7 @@ var SearchMap = React.createClass({
           id="pac-input" 
           className="controls" 
           type="text" 
-          placeholder="Which Mountain? (try: Mount Index)"
+          placeholder="Which Mountain? (try: Forbidden Peak)"
         />
         <div id="map-canvas"></div>
       </div>
