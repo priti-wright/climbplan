@@ -70,7 +70,7 @@ const TripReportResults = React.createClass({
         const reportLinks = _.map(
             reports.filter(reportMightBeUseful),
             (report) => {
-                return <TripReportLink report={report}/>;
+                return <TripReportLink report={report} key={JSON.stringify(report)}/>;
             }
         )
 

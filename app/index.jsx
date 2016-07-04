@@ -2,13 +2,15 @@
 // to get around CSS order randomness in webpack.
 import './css/base';
 
-// Some ES6+ features require the babel polyfill
-// More info here: https://babeljs.io/docs/usage/polyfill/
-// Uncomment the following line to enable the polyfill
-// require("babel/polyfill");
-
+import createHashHistory from 'history/lib/createHashHistory'
 import React from 'react';
-import Router, {DefaultRoute, Navigation, Route, RouteHandler} from 'react-router';
+import ReactDOM from 'react-dom';
+import {
+  DefaultRoute,
+  History,
+  Route,
+  Router
+} from 'react-router';
 import _ from 'lodash';
 import GoogleMapsLoader from 'google-maps';
 
@@ -18,7 +20,8 @@ import TripReportsStore from './store/TripReportsStore'
 import {initGA, trackOutboundLink, trackSearchComplete} from './ga.js'
 
 var initialZoom = 8;
-var closeZoom = 13
+var closeZoom = 13;
+GoogleMapsLoader.KEY = 'AIzaSyARGjjjbuHuxEgPU9BajclhyCWmiW5i9RI';
 
 // not sure why the tmpl.html bootstrap doesn't work; let's just bootstrap ourselves in anyway
 document.body.innerHTML += '\
@@ -73,7 +76,7 @@ var SearchMap = React.createClass({
     place: React.PropTypes.object
   },
   componentDidMount(){
-    React.findDOMNode(this)
+    ReactDOM.findDOMNode(this)
   },
   render(){
     return <div>
@@ -89,10 +92,10 @@ var SearchMap = React.createClass({
 })
 
 var SearchPage = React.createClass({
-  mixins: [Navigation],
+  mixins: [History],
   updateUrlForPlace (place) {
       this.setState(this.getUpdatedState())
-      this.transitionTo(`/search/${place.place_id}/${place.namePlussed}`)
+      this.history.pushState(null, `/search/${place.place_id}/${place.namePlussed}`)
   },
   updateTripReports (place) {
       this.setState(this.getUpdatedState())
@@ -162,21 +165,14 @@ var SearchPage = React.createClass({
 });
 
 
-var routes = (
-  <Route>
-    <Route path="/" handler={SearchPage}/>
-    <Route path="search/:placeId/:placeName" handler={SearchPage}/>
-  </Route>
-)
+const history = createHashHistory({
+  queryKey: false
+});
 
-Router.run(
-  routes,
-  Router.HashLocation,
-  (Root) => {
-    React.render(
-      <Root/>, 
-      document.getElementById('app')
-    )
-  }
+ReactDOM.render(
+  <Router history={history}>
+    <Route path="/" component={SearchPage}/>
+    <Route path="search/:placeId/:placeName" component={SearchPage}/>
+  </Router>,
+  document.getElementById('app')
 );
-

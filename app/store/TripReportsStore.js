@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import {subscribeToChanges} from './SearchedPlaceStore.js'
+import SearchedPlaceStore from './SearchedPlaceStore.js'
 
 var tripReports = [];
 var listeners = new Set([]);
@@ -64,7 +64,7 @@ const TripReportsStore = {
     }
 }
 
-subscribeToChanges(TripReportsStore.updatePlace);
+SearchedPlaceStore.subscribeToChanges(TripReportsStore.updatePlace);
 export default TripReportsStore
 export {
     statusNoInput,
