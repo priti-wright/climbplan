@@ -134,7 +134,12 @@ var ResearchSuggestions = React.createClass({
 
         return <div className="research-suggestions">
             {groupElements}
-            <ReactTooltip place="bottom" type="light" effect="solid"/>
+            <ReactTooltip
+                place="bottom"
+                type="light"
+                effect="solid"
+                className="research-suggestions-tooltip"
+            />
         </div>
     }
 })
