@@ -47,6 +47,7 @@ const TripReportLink = React.createClass({
 });
 
 
+
 const TripReportResults = React.createClass({
     propTypes: {
         tripReports: React.PropTypes.arrayOf(tripReportProp).isRequired,
@@ -62,9 +63,9 @@ const TripReportResults = React.createClass({
                 <img src={loadingIndicatorImage}></img>
             </div> : null
         const loadedInfo = (status == statusLoaded) ?
-            <span>From Peakbagger, SummitPost and Cascade Climbers search</span> : null;
+            <span className='trip-reports-info'>From Peakbagger, SummitPost and Cascade Climbers</span> : null;
         const noInputInfo = (status == statusNoInput) ?
-            <span>Enter a mountain name in the search bar to fetch reports!</span> : null
+            <span className='trip-reports-info'>Enter a mountain name in the search bar to fetch reports!</span> : null
 
         const reports = this.props.tripReports;
         const reportLinks = _.map(

@@ -1,3 +1,5 @@
+$dark-color: hsl(163, 100%, 30%);
+
 
 html, body
   margin: 0px;
@@ -7,48 +9,59 @@ html, body
 
   text-align: center;
 
-#map-canvas
+
+.map-canvas-searched
   height: 400px;
 
+.map-canvas-intro
+  height: 1000px;
+
+
+.search-box-intro, .search-box-searched
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  background-color: $dark-color;
+
+  padding: 1em;
+  z-index: 100;
+
+.search-box-searched
+  width: 100%;
+
+.search-box-intro
+  width: 500px;
+  position: absolute;
+  display: inline-block;
+  top: 400px;
+  margin-left: -250px;
+
+
 .controls
-  margin-top: 16px;
   border: 1px solid transparent;
   border-radius: 2px 0 0 2px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
-  height: 32px;
+  height: 40px;
   outline: none;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 
-
-#pac-input
   background-color: #fff;
   font-family: Roboto;
   font-size: 15px;
   font-weight: 300;
   padding: 0 11px 0 13px;
   text-overflow: ellipsis;
+  width: 100%;
 
-  position: absolute;
-  margin-left: -200px;
-  margin-top: 60px;
-  width: 400px;
-  z-index: 100;
-
-
-#pac-input:focus
+.controls:focus
   border-color: #4d90fe;
 
-
-.pac-container
-  font-family: Roboto;
 
 .section-title
   width: 100%;
   text-align: center;
   margin-bottom: 0;
   padding: .2em;
-  background-color: hsl(163, 100%, 30%);
+  background-color: $dark-color;
   color: black;
   font-weight: normal;
 
@@ -56,6 +69,7 @@ html, body
   margin: -150px 10% 0px 10%;
   width: 80%;
   position: relative;
+  text-align: left;
 
 .research-suggestions
   text-align: center;
@@ -114,6 +128,10 @@ html, body
       li
         margin: 0px;
         padding: 0px;
+
+  .trip-reports-info
+    margin: 1em;
+    display: block;
 
   .trip-report-result
     /* background-color: hsla(113, 100%, 90%, 1);*/

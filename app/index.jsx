@@ -50,7 +50,7 @@ function goToPlace(place, map){
         strokeWeight: 10
       },
   });
-  map.panBy(0, 65); // So the target's not under the search box
+  map.panBy(0, 400); // So the target's not under the search box
   
   SearchedPlaceStore.updatePlace(place)
 }
@@ -79,14 +79,19 @@ var SearchMap = React.createClass({
     ReactDOM.findDOMNode(this)
   },
   render(){
+    const placePresent = ! _.isUndefined(this.props.place);
+    const searchBoxClass = placePresent ? 'search-box-searched' : 'search-box-intro';
+    const mapCanvasClass = placePresent ? 'map-canvas-searched' : 'map-canvas-intro';
     return <div>
-        <input 
-          id="pac-input" 
-          className="controls" 
-          type="text" 
-          placeholder="Which Mountain? (try: Forbidden Peak)"
-        />
-        <div id="map-canvas"></div>
+        <div className={searchBoxClass}>
+          <input 
+            id="pac-input" 
+            className="controls" 
+            type="text" 
+            placeholder='🔍    Search for a mountain!   (e.g. "Forbidden Peak")'
+          />
+        </div>
+        <div className={mapCanvasClass} id="map-canvas"></div>
       </div>
   }
 })
@@ -123,7 +128,7 @@ var SearchPage = React.createClass({
         // Create the search box and link it to the UI element.
         var input = /** @type {HTMLInputElement} */(
           document.getElementById('pac-input'));
-        // map.controls[google.maps.ControlPosition.TOP].push(input);
+        // map.controls[google.maps.ControlPosition.CENTER].push(input);
 
         var searchBox = new google.maps.places.SearchBox((input));
         searchBox.setBounds(map.getBounds()); // Bias towards viewport
