@@ -133,7 +133,7 @@ var ResearchSuggestions = React.createClass({
         )
 
         return <div className="research-suggestions">
-            <h1 className="section-title">Research</h1>
+            <h1 className="section-title">{place.name} Research</h1>
             {groupElements}
             <ReactTooltip
                 place="bottom"
