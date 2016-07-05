@@ -50,7 +50,7 @@ function goToPlace(place, map){
         strokeWeight: 10
       },
   });
-  map.panBy(0, -65); // So the target's not under the search box
+  map.panBy(0, 65); // So the target's not under the search box
   
   SearchedPlaceStore.updatePlace(place)
 }
@@ -112,7 +112,7 @@ var SearchPage = React.createClass({
             {
               disableDefaultUI: true,
               draggable: true,
-              initialLoc: new google.maps.LatLng(47.77, -121.58),
+              initialLoc: mtIndex,
               mapTypeId: google.maps.MapTypeId.TERRAIN,
               center: mtIndex,
               zoom: initialZoom,
@@ -123,7 +123,7 @@ var SearchPage = React.createClass({
         // Create the search box and link it to the UI element.
         var input = /** @type {HTMLInputElement} */(
           document.getElementById('pac-input'));
-        map.controls[google.maps.ControlPosition.CENTER].push(input);
+        // map.controls[google.maps.ControlPosition.TOP].push(input);
 
         var searchBox = new google.maps.places.SearchBox((input));
         searchBox.setBounds(map.getBounds()); // Bias towards viewport

@@ -133,6 +133,7 @@ var ResearchSuggestions = React.createClass({
         )
 
         return <div className="research-suggestions">
+            <h1 className="section-title">Research</h1>
             {groupElements}
             <ReactTooltip
                 place="bottom"
@@ -158,18 +159,15 @@ var ResultPanel = React.createClass({
         place: React.PropTypes.object
     },
     render () {
-        // These element(s) work even if place is not present.
-        const stuffToShowEvenIfPlaceNotPresent = <span>
-            <TripReportResults />
-        </span>;
-        return _.isUndefined(this.props.place)?
-        stuffToShowEvenIfPlaceNotPresent : <div>
-            <TargetSummary place={this.props.place} />
-            <h1 className="section-title">Research</h1>
-            <ResearchSuggestions place={this.props.place} />
-            {stuffToShowEvenIfPlaceNotPresent}
-            <FeedbackMessage/>
-        </div>
+        const content = _.isUndefined(this.props.place)?
+            null :
+            <span>
+                <ResearchSuggestions place={this.props.place} />
+                <TripReportResults/>
+                <FeedbackMessage/>
+            </span>;
+
+        return <div className="main-content">{content}</div>
     }
 });
 
