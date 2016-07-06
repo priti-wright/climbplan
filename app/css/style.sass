@@ -1,6 +1,5 @@
 $dark-color: hsl(163, 100%, 30%);
 
-
 html, body
   margin: 0px;
   padding: 0px;
@@ -24,16 +23,26 @@ html, body
   padding: 1em;
   z-index: 100;
 
+
 .search-box-searched
   width: 100%;
 
 .search-box-intro
-  width: 500px;
-  position: absolute;
-  display: inline-block;
+  $search-box-intro-width: 500px;
   top: 40%;
-  margin-left: -250px;
 
+  @media screen and (min-device-width: 501px)  
+    position: absolute;
+    display: inline-block;
+    width: $search-box-intro-width;
+    margin-left: $search-box-intro-width * -0.5;
+
+  @media screen and (max-device-width: 500px)
+    width: 90%;
+    position: relative;
+    position: fixed;
+    width: 90%;
+    left: 5%;
 
 .controls
   border: 1px solid transparent;
@@ -158,8 +167,6 @@ html, body
 .trip-reports ul
   padding-left: 0px;
 
-@media screen and (max-device-width: 400px)
+@media screen and (max-device-width: 500px)
   .research-suggestions .research-link-group
-    width: 100%
-  #pac-input
     width: 100%
