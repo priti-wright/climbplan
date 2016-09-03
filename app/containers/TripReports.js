@@ -1,19 +1,17 @@
 import { connect } from 'react-redux'
-import { toggleTodo } from '../actions'
-import TodoList from '../components/TripReports'
+import {TripReportResults} from '../components/TripReportResults'
 
-const getTripReports = (tripReports) => {
-    return tripReports
-}
 
 const mapStateToProps = (state) => {
   return {
-    TripReports: getTripReports(state.tripReports)
+    place: state.place,
+    tripReports: state.tripReports.items,
+    isFetching: state.tripReports.isFetching
   }
 }
 
-const TripReports = connect(
+const TripReportsContainer = connect(
   mapStateToProps
-)(TripReports)
+)(TripReportResults)
 
-export default TripReports;
+export default TripReportsContainer;
