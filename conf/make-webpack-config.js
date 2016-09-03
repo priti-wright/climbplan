@@ -23,7 +23,7 @@ module.exports = function(options) {
   var jsLoaders = ['babel-loader'];
 
   return {
-    entry: './app/index.jsx',
+    entry: ['whatwg-fetch', './app/index.jsx'],
     debug: !options.production,
     devtool: options.devtool,
     output: {

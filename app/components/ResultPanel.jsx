@@ -2,8 +2,8 @@ import React from 'react';
 import _ from 'lodash';
 
 import ReactTooltip from 'react-tooltip';
-import TripReportResults from './TripReportResults'
-import SearchedPlaceStore from '../store/SearchedPlaceStore'
+// import TripReportResults from './TripReportResults'
+import TripReportResults from '../containers/TripReports'
 import {trackOutboundLink} from '../ga'
 
 
@@ -14,7 +14,7 @@ var TargetSummary = React.createClass({
     render(){
         var place = this.props.place
         return <div>
-            Target: <strong>{place.name}</strong>, <i>{place.types[0].replace('_', ' ')} </i> 
+            Target: <strong>{place.name}</strong>, <i>{place.types[0].replace('_', ' ')} </i>
             located at ({place.latShort}, {place.lonShort})
         </div>
     }
@@ -49,7 +49,7 @@ var ResearchLink = React.createClass({
                 "data-tip": this.props.description
             } : {}
         return <li>
-            <a 
+            <a
                 href={this.props.url}
                 onClick={onClick}
                 target="_blank"
@@ -148,7 +148,7 @@ var ResearchSuggestions = React.createClass({
 var FeedbackMessage = React.createClass({
     render(){
         return <p>
-        Thanks for playing! 
+        Thanks for playing!
         Drop us some <a href="https://docs.google.com/document/d/1s91RrNYWmucPVacHv7GkcTUHQmXTvpcIk0xGPHxJZ3A/edit?usp=sharing" target="_new">feedback</a>!
         </p>
     }
@@ -159,7 +159,7 @@ var ResultPanel = React.createClass({
         place: React.PropTypes.object
     },
     render () {
-        const content = _.isUndefined(this.props.place)?
+        const content = _.isUndefined(this.props.place.id)?
             null :
             <span>
                 <ResearchSuggestions place={this.props.place} />

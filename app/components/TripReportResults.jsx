@@ -7,6 +7,7 @@ import TripReportsStore, {
     statusLoaded,
     statusSearching
 } from '../store/TripReportsStore'
+import {fetchTripReports} from '../actions/tripReports'
 import {trackOutboundLink} from '../ga'
 
 
@@ -48,24 +49,30 @@ const TripReportLink = React.createClass({
 
 
 
-const TripReportResults = React.createClass({
+export const TripReportResults = React.createClass({
     propTypes: {
         tripReports: React.PropTypes.arrayOf(tripReportProp).isRequired,
-        tripReportsStatus: React.PropTypes.string.isRequired,
+        place: React.PropTypes.object,
+        isFetching: React.PropTypes.bool,
+    },
+    componentWillMount(){
+      this.props.dispatch(fetchTripReports(this.props.place));
+    },
+    componentWillReceiveProps(nextProps){
+      if (this.props.place.id !== nextProps.place.id){
+        this.props.dispatch(fetchTripReports(this.props.place));
+      }
     },
     render(){
-        const status = this.props.tripReportsStatus;
-
-        const loadingIndicator = (status == statusSearching) ?
-            <div className="trip-reports-loading-indicator">
-                Searching Peakbagger, SummitPost and CascadeClimbers...
-                <br/>
-                <img src={loadingIndicatorImage}></img>
-            </div> : null
-        const loadedInfo = (status == statusLoaded) ?
-            <span className='trip-reports-info'>From Peakbagger, SummitPost and Cascade Climbers</span> : null;
-        const noInputInfo = (status == statusNoInput) ?
-            <span className='trip-reports-info'>Enter a mountain name in the search bar to fetch reports!</span> : null
+        const description = this.props.isFetching ? (
+          <div className="trip-reports-loading-indicator">
+              Searching Peakbagger, SummitPost and CascadeClimbers...
+              <br/>
+              <img src={loadingIndicatorImage}></img>
+          </div>
+        ) : (
+          <span className='trip-reports-info'>From Peakbagger, SummitPost and Cascade Climbers</span>
+        )
 
         const reports = this.props.tripReports;
         const reportLinks = _.map(
@@ -77,23 +84,8 @@ const TripReportResults = React.createClass({
 
         return <div className="trip-reports">
             <h1 className="section-title">Trip Reports</h1>
-            {noInputInfo}
-            {loadedInfo}
+            {description}
             <ul>{reportLinks}</ul>
-            {loadingIndicator}
         </div>
     }
 })
-
-
-
-const TripReportResultsWrapper = React.createClass({
-    render(){
-        return <TripReportResults
-            tripReports={TripReportsStore.getTripReports()}
-            tripReportsStatus={TripReportsStore.getStatus()}
-        />
-    }
-});
-
-export default TripReportResultsWrapper;

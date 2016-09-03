@@ -16,7 +16,11 @@
   "license": "All Rights Reserved",
   "dependencies": {
     "react": "^15.0.0",
-    "react-dom": "^15.0.0"
+    "react-dom": "^15.0.0",
+    "react-redux": "^4.4.5",
+    "redux": "^3.5.2",
+    "redux-thunk": "^2.1.0",
+    "whatwg-fetch": "^0.11.0"
   },
   "devDependencies": {
     "autoprefixer-loader": "^2.0.0",
@@ -33,6 +37,7 @@
     "file-loader": "^0.8.1",
     "gh-pages": "^0.2.0",
     "google-maps": "^3.0.0",
+    "html-webpack-plugin": "^2.22.0",
     "json-loader": "^0.5.3",
     "karma": "^0.12.31",
     "karma-chai": "^0.1.0",
