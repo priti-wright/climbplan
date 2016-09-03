@@ -5,9 +5,8 @@ import GoogleMapsLoader from 'google-maps';
 import {History} from 'react-router';
 
 import reducers from '../reducers';
-import ResultPanel from './ResultPanel.jsx'
-import SearchedPlaceStore from '../store/SearchedPlaceStore';
-import TripReportsStore from '../store/TripReportsStore'
+import {receivePlace} from '../actions/place'
+import ResultPanel from '../containers/ResultPanel'
 import {trackOutboundLink, trackSearchComplete} from '../ga.js'
 
 
@@ -32,29 +31,28 @@ function goToPlace(place, map){
   });
   map.panBy(0, 400); // So the target's not under the search box
 
-  SearchedPlaceStore.updatePlace(place)
+  // SearchedPlaceStore.updatePlace(place)
 }
 
 
-function newSearchedPlace(searchBox, map){
+function newSearchedPlace(dispatch, searchBox, map){
     var places = searchBox.getPlaces();
 
     if (places.length == 0) {
         map.setZoom(initialZoom);
         return;
     } else {
+        dispatch(receivePlace(places[0]));
         goToPlace(places[0], map);
     }
 }
-
-SearchedPlaceStore.subscribeToChanges(trackSearchComplete)
 
 const SearchMap = React.createClass({
   propTypes: {
     place: React.PropTypes.object
   },
   render(){
-    const placePresent = ! _.isUndefined(this.props.place);
+    const placePresent = ! _.isUndefined(this.props.place.id);
     const searchBoxClass = placePresent ? 'search-box-searched' : 'search-box-intro';
     const mapCanvasClass = placePresent ? 'map-canvas-searched' : 'map-canvas-intro';
     return <div>
@@ -80,10 +78,12 @@ const SearchPage = React.createClass({
   updateTripReports (place) {
       this.setState(this.getUpdatedState())
   },
+  componentWillReceiveProps(nextProps){
+    if (this.props.place !== nextProps.place){
+      this.updateUrlForPlace(nextProps.place);
+    }
+  },
   componentWillMount () {
-    SearchedPlaceStore.subscribeToChanges(this.updateUrlForPlace);
-    TripReportsStore.subscribeToChanges(this.updateTripReports);
-
     GoogleMapsLoader.LIBRARIES = ['places'];
     GoogleMapsLoader.load(function(google) {
         var mtIndex = new google.maps.LatLng(47.77, -121.58);
@@ -113,7 +113,7 @@ const SearchPage = React.createClass({
           placesService
         })
 
-        if(this.props.params.placeId && !SearchedPlaceStore.isLoaded()){
+        if(this.props.params.placeId && !this.props.place.id){
           // Initial page load with a place ID in the URL
           placesService.getDetails({placeId: this.props.params.placeId}, (place, status)=>{
             document.getElementById('pac-input').value = place.formatted_address
@@ -123,12 +123,11 @@ const SearchPage = React.createClass({
 
         // Listen for the event fired when the user selects an item from the
         // pick list. Retrieve the matching place for that item.
-        google.maps.event.addListener(searchBox, 'places_changed', _.partial(newSearchedPlace, searchBox, map));
+        google.maps.event.addListener(searchBox, 'places_changed', _.partial(newSearchedPlace, this.props.dispatch, searchBox, map));
     }.bind(this));
   },
   getUpdatedState(){
       return {
-          place: SearchedPlaceStore.getPlace(),
           searchBox: this.state ? this.state.searchBox : null,
           placesService: this.state ? this.state.placesService : null
       }
@@ -138,8 +137,8 @@ const SearchPage = React.createClass({
   },
   render () {
     return <div>
-      <SearchMap place={this.state.place}/>
-      <ResultPanel place={this.state.place}/>
+      <SearchMap place={this.props.place}/>
+      <ResultPanel />
     </div>
   }
 });

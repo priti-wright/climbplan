@@ -5,7 +5,8 @@ import './css/base';
 import createHashHistory from 'history/lib/createHashHistory'
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import {applyMiddleware, createStore} from 'redux';
+import thunkMiddleware from 'redux-thunk';
 import { Provider } from 'react-redux';
 import {
   DefaultRoute,
@@ -17,9 +18,10 @@ import _ from 'lodash';
 import GoogleMapsLoader from 'google-maps';
 import {initGA} from './ga.js'
 
+import {fetchTripReportsIfNeeded} from './actions/tripReports'
 import reducers from './reducers';
-import SearchPage from './components/SearchPage.jsx'
-
+import SearchPage from './containers/SearchPage'
+import TripReports from './containers/TripReports'
 
 // not sure why the tmpl.html bootstrap doesn't work; let's just bootstrap ourselves in anyway
 document.body.innerHTML += '\
@@ -37,13 +39,17 @@ const history = createHashHistory({
   queryKey: false
 });
 
-const store = createStore(reducers, {});
+const createStoreWithMiddleware = applyMiddleware(thunkMiddleware)(createStore);
+const store = createStoreWithMiddleware(reducers, {}, window.devToolsExtension && window.devToolsExtension());
 
 const App = (
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={SearchPage}/>
-      <Route path="search/:placeId/:placeName" component={SearchPage}/>
+      <Route
+        path="search/:placeId/:placeName"
+        component={SearchPage}
+      />
     </Router>
   </Provider>
 )
