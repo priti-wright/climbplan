@@ -2,11 +2,6 @@ import React from 'react';
 import _ from 'lodash';
 
 import loadingIndicatorImage from '../static/loadingIndicator.gif'
-import TripReportsStore, {
-    statusNoInput,
-    statusLoaded,
-    statusSearching
-} from '../store/TripReportsStore'
 import {fetchTripReports} from '../actions/tripReports'
 import {trackOutboundLink} from '../ga'
 
