@@ -3,6 +3,7 @@ import Autocomplete from 'react-autocomplete';
 
 
 import {fetchSearchMatches} from '../actions/searchMatches';
+import {receivePlace} from '../actions/place';
 import {receiveQuery} from '../actions/searchQuery';
 
 const queryUpdated = (value, dispatch) => {
@@ -11,8 +12,8 @@ const queryUpdated = (value, dispatch) => {
 }
 
 
-
 const searchBox = props => {
+  const searchBoxClass = props.placePresent ? 'search-box-searched' : 'search-box-intro';
   return <Autocomplete
       inputProps={{
         name: 'Mountain Search',
@@ -20,12 +21,13 @@ const searchBox = props => {
         type:'text',
         placeholder:'🔍    Search for a mountain!   (e.g. "Forbidden Peak")',
       }}
-      wrapperProps={{className:'search-box-intro'}}
+      wrapperProps={{className:searchBoxClass}}
       value={props.query}
       items={props.matches}
       onChange={(event, value) => queryUpdated(value, props.dispatch)}
       onSelect={(event, value) => {
         props.dispatch(receiveQuery(value.name));
+        props.dispatch(receivePlace(value));
         console.log('selected', value);
       }}
       getItemValue={(item) => item.name}
@@ -41,8 +43,9 @@ const searchBox = props => {
 }
 
 searchBox.propTypes = {
+  placePresent: React.PropTypes.bool,
+  matches: React.PropTypes.array,
   query: React.PropTypes.string,
-  matches: React.PropTypes.array
 };
 
 export default searchBox;

@@ -65,6 +65,18 @@ export function getTripReports(name, lat, lon) {
 
 const GEONAMES_USERNAME = 'climbplan'
 
+function parseGeonamesResult(geonamesResult){
+    return {
+        name: geonamesResult.name,
+        lat: Number(geonamesResult.lat),
+        lon: Number(geonamesResult.lng),
+        id: geonamesResult.geonameId,
+        areaName: geonamesResult.adminCode1
+         ? `${geonamesResult.adminCode1}, ${geonamesResult.countryCode}`
+         : geonamesResult.countryCode,
+    }
+}
+
 export function searchGeonamesPlaces(query) {
   /* Search for natural features matching the query */
   return get(
@@ -74,19 +86,20 @@ export function searchGeonamesPlaces(query) {
     `&maxRows=15&countryBias=USA&featureClass=T&orderby=relevance`
   ).then(
     responseJSON => _(responseJSON.geonames)
-    .map(
-      geonamesResult => {
-        return {
-          name: geonamesResult.name,
-          lat: Number(geonamesResult.lat),
-          lon: Number(geonamesResult.lng),
-          id: geonamesResult.geonameId,
-          areaName: geonamesResult.adminCode1
-           ? `${geonamesResult.adminCode1}, ${geonamesResult.countryCode}`
-           : geonamesResult.countryCode,
-        }
-      }
-    )
+    .map(parseGeonamesResult)
     .value()
+  )
+}
+
+
+export function getGeonamesPlace(name, lat, lon) {
+  /* Get the Geonames result at a particular spot */
+  return get(
+    `http://api.geonames.org/findNearbyJSON?` + 
+    `username=${GEONAMES_USERNAME}` +
+    `&lat=${lat}&lng=${lon}` +
+    `&maxRows=1&radius=0.1&featureClass=T`
+  ).then(
+    responseJSON => parseGeonamesResult(responseJSON.geonames[0])
   )
 }

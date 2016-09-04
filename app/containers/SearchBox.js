@@ -4,6 +4,7 @@ import SearchBox from '../components/SearchBox'
 
 const mapStateToProps = (state) => {
   return {
+    placePresent: Boolean(state.place.id),
     matches: state.searchMatches,
     query: state.searchQuery
   }

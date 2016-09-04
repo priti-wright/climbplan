@@ -5,6 +5,7 @@ import GoogleMapsLoader from 'google-maps';
 import {History} from 'react-router';
 
 import {receivePlace} from '../actions/place'
+import {setQueryAndPlaceFromUrl} from '../actions/searchQuery'
 import ResultPanel from '../containers/ResultPanel'
 import SearchBox from '../containers/SearchBox'
 import SearchMap from '../containers/SearchMap'
@@ -15,13 +16,13 @@ const initialZoom = 8;
 const closeZoom = 13;
 GoogleMapsLoader.KEY = 'AIzaSyARGjjjbuHuxEgPU9BajclhyCWmiW5i9RI';
 
-function goToPlace(place, map) {
-    map.setCenter(place.geometry.location);
+function goToPlace(placeName, placeLatLon, map) {
+    map.setCenter(placeLatLon);
     map.setZoom(closeZoom);
     new google.maps.Marker({
         map: map,
-        title: place.name,
-        position: place.geometry.location,
+        title: placeName,
+        position: placeLatLon,
         icon: {
             path: google.maps.SymbolPath.CIRCLE,
             scale: 30,
@@ -31,17 +32,6 @@ function goToPlace(place, map) {
         },
     });
     map.panBy(0, 400); // So the target's not under the search box
-}
-
-function newSearchedPlace(dispatch, searchBox, map) {
-    const places = searchBox.getPlaces();
-
-    if (places.length === 0) {
-        map.setZoom(initialZoom);
-    } else {
-        goToPlace(places[0], map);
-        dispatch(receivePlace(places[0]));
-    }
 }
 
 const SearchPage = React.createClass({
@@ -67,32 +57,30 @@ const SearchPage = React.createClass({
                     scrollwheel: false,
                 }
             );
-
-            // Create the search box and link it to the UI element.
-            const input = /** @type {HTMLInputElement} */(
-              document.getElementById('pac-input'));
-
-            const searchBox = new google.maps.places.SearchBox((input));
-            searchBox.setBounds(map.getBounds()); // Bias towards viewport
-            const placesService = new google.maps.places.PlacesService(map);
-
-            // Initial page load with a place ID in the URL
-            if (this.props.params.placeId && !this.props.place.id) {
-                placesService.getDetails({placeId: this.props.params.placeId}, place => {
-                    document.getElementById('pac-input').value = place.formatted_address;
-                    goToPlace(place, map);
-                    this.props.dispatch(receivePlace(place));
-                });
+            this.setState({map});
+            if (this.props.place.id) {
+              goToPlace(place.name, {lat:place.lat, lng:place.lon}, map);
             }
 
-            // Listen for the event fired when the user selects an item from the
-            // pick list. Retrieve the matching place for that item.
-            google.maps.event.addListener(searchBox, 'places_changed', _.partial(newSearchedPlace, this.props.dispatch, searchBox, map));
+            // Initial page load with stuff already in the URL - go figure out what's up
+            if (this.props.params.placeName && !this.props.place.id) {
+                const {placeName, placeLat, placeLon} = this.props.params;
+                this.props.dispatch(
+                    setQueryAndPlaceFromUrl(placeName, placeLat, placeLon)
+                )
+            }
         });
     },
     componentWillReceiveProps(nextProps) {
         if (this.props.place !== nextProps.place) {
-            this.updateUrlForPlace(nextProps.place);
+            // this.updateUrlForPlace(nextProps.place);
+            const place = nextProps.place;
+            if (this.state.map) {
+                goToPlace(place.name, {lat:place.lat, lng:place.lon}, this.state.map);
+            }
+            if (place.id && (this.props.params.placeId != place.id)){
+                this.updateUrlForPlace(place);
+            }
         }
     },
     render() {
@@ -100,11 +88,12 @@ const SearchPage = React.createClass({
             <div>
               <SearchBox />
               <SearchMap />
+              <ResultPanel />
             </div>
         );
     },
     updateUrlForPlace(place) {
-        this.history.pushState(null, `/search/${place.place_id}/${place.namePlussed}`);
+        this.history.pushState(null, `/search/${encodeURIComponent(place.name)}/${place.lat}/${place.lon}`);
     },
 });
 
