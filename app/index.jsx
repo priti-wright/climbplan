@@ -1,6 +1,6 @@
 // IMPORTANT: This needs to be first (before any other components)
 // to get around CSS order randomness in webpack.
-import './css/base';
+import './css/base.scss';
 
 import createHashHistory from 'history/lib/createHashHistory';
 import React from 'react';

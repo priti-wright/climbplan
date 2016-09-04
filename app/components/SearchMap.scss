@@ -1,0 +1,70 @@
+$dark-color: hsl(163, 100%, 30%);
+
+.controls {
+  border: 1px solid transparent;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  height: 40px;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.controls:focus {
+  border-color: #4d90fe;
+}
+
+.mapCanvasSearched {
+  height: 400px;
+}
+
+.mapCanvasIntro {
+  height: 1000px;
+}
+
+
+.searchBoxIntro, .searchBoxSearched {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  background-color: $dark-color;
+
+  padding: 1em;
+  z-index: 100;
+}
+
+.searchBoxSearched {
+  width: 100%;
+}
+
+.searchBoxIntro {
+  $search-box-intro-width: 500px;
+  top: 40%;
+
+  @media screen and (min-device-width: 501px) {
+    position: absolute;
+    display: inline-block;
+    width: $search-box-intro-width;
+    margin-left: $search-box-intro-width * -0.5;
+  }
+
+  @media screen and (max-device-width: 500px) {
+    width: 90%;
+    position: relative;
+    position: fixed;
+    width: 90%;
+    left: 5%;
+  }
+}
+
+.selected {
+  background-color: $dark-color;
+}
+
+.deselected {}

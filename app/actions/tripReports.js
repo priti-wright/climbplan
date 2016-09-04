@@ -18,9 +18,7 @@ export function receiveTripReports(tripReports) {
 
 
 export function fetchTripReports(place) {
-    return (dispatch, getState) => {
-        const {tripReports, place} = getState();
-
+    return dispatch => {
         dispatch(requestTripReports());
 
         getTripReports(place.name, place.lat, place.lon)

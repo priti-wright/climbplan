@@ -4,13 +4,16 @@ import _ from 'lodash';
 import ReactTooltip from 'react-tooltip';
 // import TripReportResults from './TripReportResults'
 import TripReportResults from '../containers/TripReports';
+import WeatherPanel from '../containers/WeatherPanel';
 import {trackOutboundLink} from '../ga';
+import styles from './ResultPanel.scss';
+import baseStyles from '../css/base.scss';
 
 
 const placeProp = React.PropTypes.object;
 
 const ResearchLinkGroup = props => (
-     <div className="research-link-group">
+     <div className={styles.researchLinkGroup}>
         <h3>{props.title}</h3>
         <ul>
             {props.children}
@@ -32,7 +35,7 @@ const ResearchLink = props => {
                 href={props.url}
                 onClick={onClick}
                 target="_blank"
-                className="site"
+                className={styles.site}
                 {...descriptionProps}
             >
                 {props.siteName}
@@ -120,14 +123,14 @@ const ResearchSuggestions = props => {
     );
 
     return (
-        <div className="research-suggestions">
-            <h1 className="section-title">{place.name} Research</h1>
+        <div className={styles.researchSuggestions}>
+            <h1 className={baseStyles.sectionTitle}>{place.name} Research</h1>
             {groupElements}
             <ReactTooltip
                 place="bottom"
                 type="light"
                 effect="solid"
-                className="research-suggestions-tooltip"
+                className={styles.researchSuggestionsTooltip}
             />
         </div>
     );
@@ -153,7 +156,7 @@ const ResultPanel = props => {
             <FeedbackMessage />
         </span>;
 
-    return <div className="main-content">{content}</div>;
+    return <div className={baseStyles.mainContent}>{content}</div>;
 };
 
 ResultPanel.propTypes = {

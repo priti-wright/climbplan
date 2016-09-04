@@ -3,27 +3,18 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-function extractForProduction(loaders) {
-    return ExtractTextPlugin.extract('style', loaders.substr(loaders.indexOf('!')));
-}
-
 module.exports = options => {
+    // Keeps node-sass from hanging when there are shared SCSS file imports
+    // https://github.com/jtangelder/sass-loader/issues/99
+    // https://github.com/sass/node-sass/issues/857
+    process.env.UV_THREADPOOL_SIZE = 128;
+
     options.lint = fs.existsSync(`${__dirname}/../.eslintrc`) && options.lint !== false;
-
-    const localIdentName = options.production ? '[hash:base64]' : '[path]-[local]-[hash:base64:5]';
-    const cssLoaders = `style!css?localIdentName=${localIdentName}!autoprefixer?browsers=last 2 versions`;
-    const scssLoaders = `${cssLoaders}!sass`;
-    const sassLoaders = `${scssLoaders}?indentedSyntax=sass`;
-
-    if (options.production) {
-        cssLoaders = extractForProduction(cssLoaders);
-        scssLoaders = extractForProduction(scssLoaders);
-    }
 
     const jsLoaders = ['babel-loader'];
 
     return {
-        entry: './app/index.jsx',
+        entry: ['whatwg-fetch', './app/index.jsx'],
         debug: !options.production,
         devtool: options.devtool,
         output: {
@@ -43,16 +34,22 @@ module.exports = options => {
                     loaders: options.production ? jsLoaders : ['react-hot'].concat(jsLoaders),
                 },
                 {
-                    test: /\.css$/,
-                    loader: cssLoaders,
+                    // Basic CSS/Sass Loaders:
+                    // Takes any CSS and SCSS files from node_modules and lib folders (useful for npm linking),
+                    // transpiles the SCSS ones to CSS, and then adds all that to the output of the Extract Text plugin.
+                    test: /\.s?css$/,
+                    include: /\/(node_modules|lib)\//, // Tells Webpack to only use this loader on dependencies
+                    loader: ExtractTextPlugin.extract('css!sass'),
                 },
                 {
-                    test: /\.sass$/,
-                    loader: sassLoaders,
-                },
-                {
-                    test: /\.scss$/,
-                    loader: scssLoaders,
+                    // CSS module CSS/Sass Loaders:
+                    // Transpiles SCSS into CSS files and then transpiles that into CSS modules.
+                    // That then gets added to the output of the Extract Text plugin.
+                    test: /\.s?css$/,
+                    exclude: /\/(node_modules|lib)\//, // Tells Webpack not to use this loader on dependencies
+                    loader: ExtractTextPlugin.extract(
+                        'css?modules&localIdentName=[name]--[local]_[hash:base64:5]!sass'
+                    ),
                 },
                 {
                     test: /\.png$/,
@@ -77,7 +74,7 @@ module.exports = options => {
             ],
         },
         resolve: {
-            extensions: ['', '.js', '.jsx', '.sass', '.css'],
+            extensions: ['', '.js', '.jsx', '.sass', '.css', '.scss'],
         },
         plugins: options.production ? [
             // Important to keep React file size down
@@ -98,6 +95,7 @@ module.exports = options => {
                 production: true,
             }),
         ] : [
+            new ExtractTextPlugin('app.[hash].css'),
             new HtmlWebpackPlugin({
                 template: './conf/tmpl.html',
             }),

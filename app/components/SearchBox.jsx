@@ -5,6 +5,7 @@ import Autocomplete from 'react-autocomplete';
 import {fetchSearchMatches} from '../actions/searchMatches';
 import {receivePlace} from '../actions/place';
 import {receiveQuery} from '../actions/searchQuery';
+import styles from './SearchMap.scss';
 
 const queryUpdated = (value, dispatch) => {
     dispatch(receiveQuery(value));
@@ -13,11 +14,11 @@ const queryUpdated = (value, dispatch) => {
 
 
 const searchBox = props => {
-  const searchBoxClass = props.placePresent ? 'search-box-searched' : 'search-box-intro';
+  const searchBoxClass = props.placePresent ? styles.searchBoxSearched : styles.searchBoxIntro;
   return <Autocomplete
       inputProps={{
         name: 'Mountain Search',
-        className: 'controls',
+        className: styles.controls,
         type:'text',
         placeholder:'🔍    Search for a mountain!   (e.g. "Forbidden Peak")',
         autoFocus: true,
@@ -34,7 +35,7 @@ const searchBox = props => {
       getItemValue={(item) => item.name}
       renderItem={(item, isHighlighted) => (
         <div
-          className={isHighlighted ? 'selected' : 'deselected'}
+          className={isHighlighted ? styles.selected : styles.deselected}
           style={{height:'3em', 'padding': '1em'}}
           key={item.id}
           id={item.name}
