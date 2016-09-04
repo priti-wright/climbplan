@@ -49,7 +49,7 @@ const SearchPage = React.createClass({
                 document.getElementById('map-canvas'),
                 {
                     disableDefaultUI: true,
-                    draggable: true,
+                    draggable: false,
                     initialLoc: mtIndex,
                     mapTypeId: google.maps.MapTypeId.TERRAIN,
                     center: mtIndex,
