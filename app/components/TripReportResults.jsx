@@ -4,6 +4,8 @@ import React from 'react';
 import loadingIndicatorImage from '../static/loadingIndicator.gif';
 import {fetchTripReports} from '../actions/tripReports';
 import {trackOutboundLink} from '../ga';
+import styles from './TripReportResults.scss';
+import baseStyles from '../css/base.scss';
 
 
 const tripReportProp = React.PropTypes.shape({
@@ -25,23 +27,23 @@ const TripReportLink = props => {
     const onClick = () => trackOutboundLink(report.link);
     const headline = (report.title && report.route) ?
         `${report.title} | ${report.route}` : report.title || report.route;
-    const headlineElement = <span className="trip-report-headline">{headline}</span>;
+    const headlineElement = <span className={styles.tripReportHeadline}>{headline}</span>;
     const {date} = report;
-    const dateElement = <span className="trip-report-date">{date.toISOString().slice(0, 10)}</span>;
-    const siteElement = <span className="trip-report-site">{report.site}</span>;
+    const dateElement = <span className={styles.tripReportDate}>{date.toISOString().slice(0, 10)}</span>;
+    const siteElement = <span className={styles.tripReportSite}>{report.site}</span>;
     const photoElement = (
         report.has_photos ?
-        <span className="has-photos" title="Photos">📷</span> :
-        <span className="no-photos" />
+        <span className={styles.hasPhotos} title="Photos">📷</span> :
+        <span className={styles.noPhotos} />
     );
     const gpsElement = (
         report.has_gps ?
-        <span className="has-gps" title="GPS track">🛰</span> :
-        <span className="no-gps" />
+        <span className={styles.hasGps} title="GPS track">🛰</span> :
+        <span className={styles.noGps} />
     );
 
     return (
-        <li className="trip-report-result">
+        <li className={styles.tripReportResult}>
             <a href={report.link} onClick={onClick} target="_blank" title={headline}>
                 {dateElement}{headlineElement} {photoElement}{gpsElement}{siteElement}
             </a>
@@ -70,13 +72,13 @@ export const TripReportResults = React.createClass({
     },
     render() {
         const description = this.props.isFetching ? (
-          <div className="trip-reports-loading-indicator">
+          <div className={styles.tripReportsLoadingIndicator}>
               Searching Peakbagger, SummitPost and CascadeClimbers...
               <br />
               <img src={loadingIndicatorImage} />
           </div>
         ) : (
-          <span className="trip-reports-info">From Peakbagger, SummitPost and Cascade Climbers</span>
+          <span className={styles.tripReportsInfo}>From Peakbagger, SummitPost and Cascade Climbers</span>
         );
 
         const reports = this.props.tripReports;
@@ -88,8 +90,8 @@ export const TripReportResults = React.createClass({
         );
 
         return (
-            <div className="trip-reports">
-                <h1 className="section-title">Trip Reports</h1>
+            <div className={styles.tripReports}>
+                <h1 className={baseStyles.sectionTitle}>Trip Reports</h1>
                 {description}
                 <ul>{reportLinks}</ul>
             </div>

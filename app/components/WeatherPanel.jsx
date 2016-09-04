@@ -1,18 +1,18 @@
 import React from 'react';
 
 import {fetchWeather} from '../actions/weather';
-import styles from './WeatherPanel.css';
+import styles from './WeatherPanel.scss';
+import baseStyles from '../css/base.scss';
 
 const WeatherDay = props => {
     console.log('styles')
     console.log(styles)
     return (
-        <li>
-            <div className={styles.day}>{props.day_of_week}</div>
-            <div>Temperature: {props.temperature} ({props.temperature_label})</div>
-            <div>{props.weather_summary}</div>
-            <br />
-        </li>
+        <div className={styles.weatherDay}>
+            <h2>{props.day_of_week}</h2>
+            <p>{props.temperature}°F ({props.temperature_label})</p>
+            <p>{props.weather_summary}</p>
+        </div>
     );
 };
 
@@ -40,14 +40,14 @@ export const WeatherPanel = React.createClass({
         }
     },
     render() {
-        const weatherDays = this.props.weather.slice(0, 10).map(weatherDay => {
+        const weatherDays = this.props.weather.slice(0, 6).map(weatherDay => {
             return <WeatherDay {...weatherDay} key={weatherDay.day_of_week} />;
         });
 
         return (
-            <div className="trip-reports">
-                <h1 className="section-title">Weather</h1>
-                <ul className="trip-reports-info">{weatherDays}</ul>
+            <div className={baseStyles.resultPanel}>
+                <h1 className={baseStyles.sectionTitle}>Weather</h1>
+                <div className={baseStyles.weather}>{weatherDays}</div>
             </div>
         );
     },

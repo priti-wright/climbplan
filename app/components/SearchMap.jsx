@@ -1,15 +1,16 @@
 import _ from 'lodash';
 import React from 'react';
+import styles from './SearchMap.scss';
 
 const SearchMap = props => {
     const placePresent = ! _.isUndefined(props.place.id);
-    const searchBoxClass = placePresent ? 'search-box-searched' : 'search-box-intro';
-    const mapCanvasClass = placePresent ? 'map-canvas-searched' : 'map-canvas-intro';
+    const searchBoxClass = placePresent ? styles.searchBoxSearched : styles.searchBoxIntro;
+    const mapCanvasClass = placePresent ? styles.mapCanvasSearched : styles.mapCanvasIntro;
     return (<div>
       <div className={searchBoxClass}>
         <input
           id="pac-input"
-          className="controls"
+          className={styles.controls}
           type="text"
           placeholder='🔍    Search for a mountain!   (e.g. "Forbidden Peak")'
         />
