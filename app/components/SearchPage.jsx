@@ -7,6 +7,7 @@ import {History} from 'react-router';
 import reducers from '../reducers';
 import {receivePlace} from '../actions/place'
 import ResultPanel from '../containers/ResultPanel'
+import SearchBox from '../containers/SearchBox'
 import SearchMap from '../containers/SearchMap'
 import {trackOutboundLink, trackSearchComplete} from '../ga.js'
 
@@ -99,8 +100,7 @@ const SearchPage = React.createClass({
   },
   render () {
     return <div>
-      <SearchMap />
-      <ResultPanel />
+      <SearchBox />
     </div>
   }
 });
