@@ -35,6 +35,11 @@ function post(url, data) {
    .catch(error => handleError(`An API failure occured while posting JSON to "${url}"`, error));
 }
 
+export function get(url) {
+    return fetch(url)
+      .then(handleResponse)
+      .catch(error => handleError(`An API failure occured while posting JSON to "${url}"`, error));
+}
 
 const prepTripReport = report => {
     return _.merge(
@@ -56,4 +61,45 @@ export function getTripReports(name, lat, lon) {
     const placeRequest = {data: {name, lat, lon}};
     return post('https://trfind.herokuapp.com/find', placeRequest)
     .then(parseTripReports);
+}
+
+const GEONAMES_USERNAME = 'climbplan'
+
+function parseGeonamesResult(geonamesResult){
+    return {
+        name: geonamesResult.name,
+        lat: Number(geonamesResult.lat),
+        lon: Number(geonamesResult.lng),
+        id: geonamesResult.geonameId,
+        areaName: geonamesResult.adminCode1
+         ? `${geonamesResult.adminCode1}, ${geonamesResult.countryCode}`
+         : geonamesResult.countryCode,
+    }
+}
+
+export function searchGeonamesPlaces(query) {
+  /* Search for natural features matching the query */
+  return get(
+    `http://api.geonames.org/searchJSON?` + 
+    `username=${GEONAMES_USERNAME}` +
+    `&name_startsWith=${encodeURIComponent(query)}` +
+    `&maxRows=15&countryBias=USA&featureClass=T&orderby=relevance`
+  ).then(
+    responseJSON => _(responseJSON.geonames)
+    .map(parseGeonamesResult)
+    .value()
+  )
+}
+
+
+export function getGeonamesPlace(name, lat, lon) {
+  /* Get the Geonames result at a particular spot */
+  return get(
+    `http://api.geonames.org/findNearbyJSON?` + 
+    `username=${GEONAMES_USERNAME}` +
+    `&lat=${lat}&lng=${lon}` +
+    `&maxRows=1&radius=0.1&featureClass=T`
+  ).then(
+    responseJSON => parseGeonamesResult(responseJSON.geonames[0])
+  )
 }
