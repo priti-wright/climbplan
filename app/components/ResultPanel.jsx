@@ -4,6 +4,7 @@ import _ from 'lodash';
 import ReactTooltip from 'react-tooltip';
 // import TripReportResults from './TripReportResults'
 import TripReportResults from '../containers/TripReports';
+import WeatherPanel from '../containers/WeatherPanel';
 import {trackOutboundLink} from '../ga';
 
 
@@ -149,6 +150,7 @@ const ResultPanel = props => {
         null :
         <span>
             <ResearchSuggestions place={props.place} />
+            <WeatherPanel />
             <TripReportResults />
             <FeedbackMessage />
         </span>;
