@@ -20,6 +20,7 @@ const searchBox = props => {
         className: 'controls',
         type:'text',
         placeholder:'🔍    Search for a mountain!   (e.g. "Forbidden Peak")',
+        autoFocus: true,
       }}
       wrapperProps={{className:searchBoxClass}}
       value={props.query}
