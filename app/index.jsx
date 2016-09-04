@@ -2,26 +2,20 @@
 // to get around CSS order randomness in webpack.
 import './css/base';
 
-import createHashHistory from 'history/lib/createHashHistory'
+import createHashHistory from 'history/lib/createHashHistory';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {applyMiddleware, createStore} from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 import {
-  DefaultRoute,
-  History,
-  Route,
-  Router
+    Route,
+    Router,
 } from 'react-router';
-import _ from 'lodash';
-import GoogleMapsLoader from 'google-maps';
-import {initGA} from './ga.js'
+import {initGA} from './ga.js';
 
-import {fetchTripReportsIfNeeded} from './actions/tripReports'
 import reducers from './reducers';
-import SearchPage from './containers/SearchPage'
-import TripReports from './containers/TripReports'
+import SearchPage from './containers/SearchPage';
 
 // not sure why the tmpl.html bootstrap doesn't work; let's just bootstrap ourselves in anyway
 document.body.innerHTML += '\
@@ -36,7 +30,7 @@ initGA();
 
 
 const history = createHashHistory({
-  queryKey: false
+    queryKey: false,
 });
 
 const createStoreWithMiddleware = applyMiddleware(thunkMiddleware)(createStore);
@@ -45,14 +39,14 @@ const store = createStoreWithMiddleware(reducers, {}, window.devToolsExtension &
 const App = (
   <Provider store={store}>
     <Router history={history}>
-      <Route path="/" component={SearchPage}/>
+      <Route path="/" component={SearchPage} />
       <Route
         path="search/:placeId/:placeName"
         component={SearchPage}
       />
     </Router>
   </Provider>
-)
+);
 
 ReactDOM.render(
   App,

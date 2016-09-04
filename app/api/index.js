@@ -2,15 +2,15 @@ import 'whatwg-fetch';
 import _ from 'lodash';
 
 export function handleError(message, error) {
-   if (window.onerror) {
-       window.onerror(message, undefined, undefined, undefined, error);
-   }
+    if (window.onerror) {
+        window.onerror(message, undefined, undefined, undefined, error);
+    }
 
-   return Promise.reject(error);
+    return Promise.reject(error);
 }
 
 export function handleResponse(response) {
-   return response.json()
+    return response.json()
        .then(json => {
            // Returned parsed json if response is valid
            if (response.ok) {
@@ -23,20 +23,20 @@ export function handleResponse(response) {
 }
 
 function post(url, data) {
-   return fetch(url, {
-       method: 'POST',
-       headers: {
-           'Content-Type': 'application/json',
-       },
-       mode: 'cors',
-       body: JSON.stringify(data),
-   })
+    return fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        mode: 'cors',
+        body: JSON.stringify(data),
+    })
    .then(handleResponse)
    .catch(error => handleError(`An API failure occured while posting JSON to "${url}"`, error));
 }
 
 
-const prepTripReport = (report) => {
+const prepTripReport = report => {
     return _.merge(
         {},
         report,
@@ -47,13 +47,13 @@ const prepTripReport = (report) => {
 };
 
 function parseTripReports(response) {
-  return _(
+    return _(
       response.data.map(prepTripReport)
   ).sortBy('date').reverse().value();
 }
 
 export function getTripReports(name, lat, lon) {
-  const placeRequest = {data: {name, lat, lon}};
-  return post('https://trfind.herokuapp.com/find', placeRequest)
+    const placeRequest = {data: {name, lat, lon}};
+    return post('https://trfind.herokuapp.com/find', placeRequest)
     .then(parseTripReports);
 }
