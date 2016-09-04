@@ -9,5 +9,5 @@ export default combineReducers({
   tripReports,
   place,
   searchMatches,
-  searchQuery
+  searchQuery,
 });
