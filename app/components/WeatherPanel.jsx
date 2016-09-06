@@ -1,12 +1,10 @@
 import React from 'react';
 
 import {fetchWeather} from '../actions/weather';
+import ResultBox from './ResultBox';
 import styles from './WeatherPanel.scss';
-import baseStyles from '../css/base.scss';
 
 const WeatherDay = props => {
-    console.log('styles')
-    console.log(styles)
     return (
         <div className={styles.weatherDay}>
             <h2>{props.day_of_week}</h2>
@@ -45,10 +43,9 @@ export const WeatherPanel = React.createClass({
         });
 
         return (
-            <div className={baseStyles.resultPanel}>
-                <h1 className={baseStyles.sectionTitle}>Weather</h1>
-                <div className={baseStyles.weather}>{weatherDays}</div>
-            </div>
+            <ResultBox title="Weather">
+                {weatherDays}
+            </ResultBox>
         );
     },
 });

@@ -1,29 +1,33 @@
 .tripReportsInfo {
-margin: 1em;
-display: block;
+    margin: 1em;
+    display: block;
 }
 
 .tripReportResult {
-/* background-color: hsla(113, 100%, 90%, 1);*/
-padding: .5em;
-padding-left: 1em;
-width: 100%;
+    padding: .5em;
+    padding-left: 1em;
+    width: 100%;
+}
 
 .tripReportDate {
-  margin-right: 2em;
+    margin-right: 2em;
 }
 
 .tripReportSite {
-  float: right;
-}
+    float: right;
 }
 
 .tripReportResult:hover,
 .tripReportResult:nth-child(even):hover {
-  background-color: gray;
+    background-color: gray;
 }
 
 .tripReportsLoadingIndicator {
-width: 100%;
-text-align: center;
+    width: 100%;
+    text-align: center;
+}
+
+.tripReportList {
+    list-style-type: none;
+    padding: 0px;
 }
