@@ -41,7 +41,7 @@ const App = (
     <Router history={history}>
       <Route path="/" component={SearchPage} />
       <Route
-        path="search/:placeId/:placeName"
+        path="search/:placeName/:placeLat/:placeLon"
         component={SearchPage}
       />
     </Router>

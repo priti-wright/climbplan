@@ -1,73 +1,29 @@
-.tripReports {
-  display: inline-block;
-  margin-bottom: 50px;
-  padding: 0px;
-  width: 100%;
-  background-color: white;
-
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-
-  h1 {
-    margin-top: 0px;
-    /*padding-top: .5em;*/
-  }
-
-  a.site {
-    border-bottom: 1px solid #bbb;
-    background-color: lightgrey;
-    padding: .3em 1.5em;
-    display: inline-block;
-    text-decoration: none;
-    width: 90%;
-    margin-bottom: .5em;
-  }
-
-  a.site:nth-child(even) {
-    background-color: #bbb;
-  }
-  a.site:hover {
-    background-color: grey;
-  }
-  a.site:active {
-    background-color: grey;
-    border-bottom-color: lightgrey;
-  }
-
-  ul {
-    list-style-type: none;
-  }
-
-  .tripReportsInfo {
-    margin: 1em;
-    display: block;
-  }
-
-  .tripReportResult {
-    /* background-color: hsla(113, 100%, 90%, 1);*/
-    padding: .5em;
-    padding-left: 1em;
-    width: 100%;
-
-    .tripReportDate {
-      margin-right: 2em;
-    }
-
-    .tripReportSite {
-      float: right;
-    }
-  }
-
-  .tripReportResult:hover,
-  .tripReportResult:nth-child(even):hover {
-      background-color: gray;
-  }
-
-  .tripReportsLoadingIndicator {
-    width: 100%;
-    text-align: center;
-  }
+.tripReportsInfo {
+margin: 1em;
+display: block;
 }
 
-.tripReports ul {
-  padding-left: 0px;
+.tripReportResult {
+/* background-color: hsla(113, 100%, 90%, 1);*/
+padding: .5em;
+padding-left: 1em;
+width: 100%;
+
+.tripReportDate {
+  margin-right: 2em;
+}
+
+.tripReportSite {
+  float: right;
+}
+}
+
+.tripReportResult:hover,
+.tripReportResult:nth-child(even):hover {
+  background-color: gray;
+}
+
+.tripReportsLoadingIndicator {
+width: 100%;
+text-align: center;
 }

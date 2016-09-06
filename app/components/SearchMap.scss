@@ -62,3 +62,9 @@ $dark-color: hsl(163, 100%, 30%);
     left: 5%;
   }
 }
+
+.selected {
+  background-color: $dark-color;
+}
+
+.deselected {}
