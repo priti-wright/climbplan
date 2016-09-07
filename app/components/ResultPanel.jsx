@@ -21,7 +21,6 @@ const ResultPanel = props => {
         null :
         <span>
             <ResearchSuggestions place={props.place} />
-            <WeatherPanel />
             <TripReportResults />
             <FeedbackMessage />
         </span>;
