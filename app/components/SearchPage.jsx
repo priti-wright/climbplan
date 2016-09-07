@@ -58,17 +58,6 @@ const SearchPage = React.createClass({
                 }
             );
             this.setState({map});
-            if (this.props.place.id) {
-              goToPlace(place.name, {lat:place.lat, lng:place.lon}, map);
-            }
-
-            // Initial page load with stuff already in the URL - go figure out what's up
-            if (this.props.params.placeName && !this.props.place.id) {
-                const {placeName, placeLat, placeLon} = this.props.params;
-                this.props.dispatch(
-                    setQueryAndPlaceFromUrl(placeName, placeLat, placeLon)
-                )
-            }
         });
     },
     componentWillReceiveProps(nextProps) {

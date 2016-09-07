@@ -44,7 +44,14 @@ export const WeatherPanel = React.createClass({
 
         return (
             <ResultBox title="Weather">
-                {weatherDays}
+                <iframe
+                    id="forecast_embed"
+                    type="text/html"
+                    frameBorder="0"
+                    height="240"
+                    width="100%"
+                    src={`http://forecast.io/embed/#lat=${this.props.place.lat}&lon=${this.props.place.lon}&name=${this.props.place.name}`}
+                />
             </ResultBox>
         );
     },

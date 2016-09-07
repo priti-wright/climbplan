@@ -19,13 +19,16 @@ const FeedbackMessage = () => {
 const ResultPanel = props => {
     const content = _.isUndefined(props.place.id) ?
         null :
-        <span>
-            <ResearchSuggestions place={props.place} />
-            <TripReportResults />
+        <div>
+            <div className={styles.mainContent}>
+                <ResearchSuggestions place={props.place} />
+                <WeatherPanel />
+                <TripReportResults />
+            </div>
             <FeedbackMessage />
-        </span>;
+        </div>;
 
-    return <div className={styles.mainContent}>{content}</div>;
+    return <div>{content}</div>;
 };
 
 ResultPanel.propTypes = {

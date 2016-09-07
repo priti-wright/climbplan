@@ -1,3 +1,5 @@
+@import './colors';
+
 * {
   box-sizing: border-box
 }
@@ -13,7 +15,7 @@ body {
   margin: 0px;
   padding: 0px;
   font-family: Tw Cen MT, Trebuchet MS, sans serif;
-  background-color: hsl(163, 50%, 50%);
+  background-color: $light-color;
 
   text-align: center;
 }

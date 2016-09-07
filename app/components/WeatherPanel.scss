@@ -1,3 +1,7 @@
+@import '../css/colors';
+
+$temperatureBarColor: $light-color;
+
 .weatherDay {
     display: inline-block;
     float: left;

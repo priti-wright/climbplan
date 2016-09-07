@@ -1,6 +1,29 @@
 .mainContent {
-  margin: -150px 10% 0px 10%;
-  width: 80%;
-  position: relative;
-  text-align: left;
+    margin: -150px 10% 0px 10%;
+    width: 80%;
+    position: relative;
+    text-align: left;
+
+   @media (min-width: 900px) {
+       display: block;
+   }
+   @media (min-width: 900px) {
+       display: flex;
+       flex-wrap: wrap;
+       justify-content: space-between;
+       > div {
+           flex-basis: 47%;
+       }
+       > :nth-child(3) {
+           margin-top: 20px;
+           flex-grow: 1;
+       }
+       > :nth-last-child(1) {
+           margin-right: 0px;
+       }
+
+       > :last-child {
+           margin-bottom: 16px;
+       }
+   }
 }
