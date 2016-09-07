@@ -1,15 +1,23 @@
 import React from 'react';
 import Autocomplete from 'react-autocomplete';
 
-
 import {fetchSearchMatches} from '../actions/searchMatches';
 import {receivePlace} from '../actions/place';
 import {receiveQuery} from '../actions/searchQuery';
 import styles from './SearchMap.scss';
+import searchBoxStyles from './SearchBox.scss';
 
 const queryUpdated = (value, dispatch) => {
     dispatch(receiveQuery(value));
     dispatch(fetchSearchMatches(value));
+};
+
+
+const renderAutocompleteMenu = (items, value, style) => {
+    if (items.length) {
+        return <div className={searchBoxStyles.menu} style={style} children={items} />;
+    }
+    return <span />;
 };
 
 
@@ -36,11 +44,12 @@ const searchBox = props => {
       renderItem={(item, isHighlighted) => (
         <div
           className={isHighlighted ? styles.selected : styles.deselected}
-          style={{height: '3em', 'padding': '1em'}}
+          style={{height: '3em', padding: '1em'}}
           key={item.id}
           id={item.name}
         >{item.name} <small>{item.areaName}</small></div>
       )}
+      renderMenu={renderAutocompleteMenu}
   />);
 };
 

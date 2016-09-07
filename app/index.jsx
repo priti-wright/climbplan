@@ -2,6 +2,8 @@
 // to get around CSS order randomness in webpack.
 import './css/base.scss';
 
+import 'babel-polyfill';
+
 import createHashHistory from 'history/lib/createHashHistory';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -59,7 +61,7 @@ const SiteRouter = props => (
     </Router>
 );
 
-SiteRouter.propTypes = {dispatch: React.PropTypes.function};
+SiteRouter.propTypes = {dispatch: React.PropTypes.func};
 
 const SiteRouterContainer = connect()(SiteRouter);
 

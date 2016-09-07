@@ -2,8 +2,6 @@ import {REQUEST_SEARCH_MATCHES, RECEIVE_SEARCH_MATCHES} from '../actions/searchM
 
 const searchMatches = (state = [], action) => {
   switch (action.type) {
-    case REQUEST_SEARCH_MATCHES:
-      return []
     case RECEIVE_SEARCH_MATCHES:
       return action.searchMatches
     default:
