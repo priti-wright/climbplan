@@ -92,7 +92,9 @@ export const TripReportResults = React.createClass({
         return (
             <ResultBox title="Trip Reports">
                 {description}
-                <ul>{reportLinks}</ul>
+                <ul className={styles.tripReportList}>
+                    {reportLinks}
+                </ul>
             </ResultBox>
         );
     },

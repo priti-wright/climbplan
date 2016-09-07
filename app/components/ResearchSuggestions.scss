@@ -1,0 +1,53 @@
+.researchSuggestions {
+  text-align: center;
+
+  .__react_component_tooltip {
+    max-width: 400px;
+    text-align: left;
+  }
+}
+
+.researchLinkGroup {
+    float: left;
+    height: 100%;
+    width: 33.33%;
+    text-align: center;
+
+    ul {
+        list-style-type: none;
+        padding: 0px;
+
+        li {
+          margin: 0px;
+          padding: 0px;
+        }
+    }
+
+    a.site {
+        border-bottom: 1px solid #bbb;
+        background-color: lightgrey;
+        padding: .3em 1.5em;
+        display: inline-block;
+        text-decoration: none;
+        width: 90%;
+        margin-bottom: .5em;
+    }
+
+    a.site:nth-child(even) {
+        background-color: #bbb;
+    }
+    a.site:hover {
+        background-color: grey;
+    }
+    a.site:active {
+        background-color: grey;
+        border-bottom-color: lightgrey;
+    }
+}
+
+@media screen and (max-device-width: 500px) {
+    .researchSuggestions,
+    .researchLinkGroup {
+        width: 100%
+    }
+}

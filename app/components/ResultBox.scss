@@ -22,30 +22,8 @@ $dark-color: hsl(163, 100%, 30%);
   h1 {
     margin-top: 0px;
   }
+}
 
-  a.site {
-    border-bottom: 1px solid #bbb;
-    background-color: lightgrey;
-    padding: .3em 1.5em;
-    display: inline-block;
-    text-decoration: none;
-    width: 90%;
-    margin-bottom: .5em;
-  }
-
-  a.site:nth-child(even) {
-    background-color: #bbb;
-  }
-  a.site:hover {
-    background-color: grey;
-  }
-  a.site:active {
-    background-color: grey;
-    border-bottom-color: lightgrey;
-  }
-
-  ul {
-    list-style-type: none;
-    padding-left: 0px;
-  }
+.content {
+    padding: 10px;
 }

@@ -6,7 +6,9 @@ const ResultBox = props => {
     return (
         <div className={styles.resultBox}>
             <h1 className={styles.sectionTitle}>{props.title}</h1>
-            {props.children}
+            <div className={styles.content}>
+                {props.children}
+            </div>
         </div>
     );
 };
