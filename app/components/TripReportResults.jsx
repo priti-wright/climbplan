@@ -67,7 +67,7 @@ export const TripReportResults = React.createClass({
     },
     componentWillReceiveProps(nextProps) {
         if (this.props.place.id !== nextProps.place.id) {
-            this.props.dispatch(fetchTripReports(this.props.place));
+            this.props.dispatch(fetchTripReports(nextProps.place));
         }
     },
     render() {
