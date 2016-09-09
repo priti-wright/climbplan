@@ -1,7 +1,7 @@
 import {get} from './request';
 
 
-const GEONAMES_USERNAME = 'climbplan'
+const GEONAMES_USERNAME = 'climbplan';
 
 // These are limited to things that might have interesting climbing. Full list of possibilities at http://www.geonames.org/export/codes.html
 const FEATURE_CODES = _.map([
@@ -49,10 +49,10 @@ const FEATURE_CODES = _.map([
     'SINK    sinkhole    a small crater-shape depression in a karst area',
     'SPUR    spur(s) a subordinate ridge projecting outward from a hill, mountain or other elevation',
     'VLC volcano a conical elevation composed of volcanic materials with a crater at the top',
-], str => str.split(' ')[0])
-const FEATURE_CODES_PARAMS = _.map(FEATURE_CODES, code => `&featureCode=${code}`).join('')
+], str => str.split(' ')[0]);
+const FEATURE_CODES_PARAMS = _.map(FEATURE_CODES, code => `&featureCode=${code}`).join('');
 
-function parseGeonamesResult(geonamesResult){
+function parseGeonamesResult(geonamesResult) {
     return {
         name: geonamesResult.name,
         lat: Number(geonamesResult.lat),
@@ -61,33 +61,33 @@ function parseGeonamesResult(geonamesResult){
         areaName: geonamesResult.adminCode1
          ? `${geonamesResult.adminCode1}, ${geonamesResult.countryCode}`
          : geonamesResult.countryCode,
-    }
+    };
 }
 
 export function searchGeonamesPlaces(query) {
   /* Search for mountain-y features matching the query */
-  return get(
-    `http://api.geonames.org/searchJSON?` + 
+    return get(
+    'http://api.geonames.org/searchJSON?' +
     `username=${GEONAMES_USERNAME}` +
     `&name_startsWith=${encodeURIComponent(query)}` +
-    `&maxRows=15&countryBias=USA&orderby=relevance` +
+    '&maxRows=15&countryBias=USA&orderby=relevance' +
     FEATURE_CODES_PARAMS
   ).then(
     responseJSON => _(responseJSON.geonames)
     .map(parseGeonamesResult)
     .value()
-  )
+  );
 }
 
 export function getGeonamesPlace(name, lat, lon) {
   /* Get the Geonames result at a particular spot */
-  return get(
-    `http://api.geonames.org/findNearbyJSON?` + 
+    return get(
+    'http://api.geonames.org/findNearbyJSON?' +
     `username=${GEONAMES_USERNAME}` +
     `&lat=${lat}&lng=${lon}` +
-    `&maxRows=1&radius=0.1` +
+    '&maxRows=1&radius=0.1' +
     FEATURE_CODES_PARAMS
   ).then(
     responseJSON => parseGeonamesResult(responseJSON.geonames[0])
-  )
+  );
 }
