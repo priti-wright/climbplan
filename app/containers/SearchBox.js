@@ -2,11 +2,13 @@ import {connect} from 'react-redux';
 import SearchBox from '../components/SearchBox';
 
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
     return {
-        placePresent: Boolean(state.place.id),
+        autoFocus: ownProps.autoFocus,
+        place: state.place,
         matches: state.searchMatches,
         query: state.searchQuery,
+        className: ownProps.className,
     };
 };
 
