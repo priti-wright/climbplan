@@ -17,7 +17,7 @@ const FeedbackMessage = () => {
 };
 
 const ResultPanel = props => {
-    const content = _.isUndefined(props.place.id) ?
+    const content = _.isUndefined(props.place) ?
         null :
         <div>
             <div className={styles.mainContent}>

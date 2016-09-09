@@ -62,12 +62,11 @@ const SearchPage = React.createClass({
     },
     componentWillReceiveProps(nextProps) {
         if (this.props.place !== nextProps.place) {
-            // this.updateUrlForPlace(nextProps.place);
             const place = nextProps.place;
             if (this.state.map) {
-                goToPlace(place.name, {lat:place.lat, lng:place.lon}, this.state.map);
+                goToPlace(place.name, {lat: place.lat, lng: place.lon}, this.state.map);
             }
-            if (place.id && (this.props.params.placeId != place.id)){
+            if (place.id && (this.props.params.placeId !== place.id)) {
                 this.updateUrlForPlace(place);
             }
         }
@@ -77,7 +76,6 @@ const SearchPage = React.createClass({
             <div>
               <SearchBox />
               <SearchMap />
-              <ResultPanel />
             </div>
         );
     },
