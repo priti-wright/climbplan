@@ -4,7 +4,7 @@ import {RECEIVE_PLACE} from '../actions/place';
 const parsePlace = place => {
     const {areaName, id, name, lat, lon} = place;
     return {
-        id, 
+        id,
         lat,
         latShort: lat.toFixed(3),
         lon,

@@ -4,12 +4,12 @@ import GoogleMapsLoader from 'google-maps';
 
 import {History} from 'react-router';
 
-import {receivePlace} from '../actions/place'
-import {setQueryAndPlaceFromUrl} from '../actions/searchQuery'
-import ResultPanel from '../containers/ResultPanel'
-import SearchBox from '../containers/SearchBox'
-import SearchMap from '../containers/SearchMap'
-import {trackOutboundLink, trackSearchComplete} from '../ga.js'
+import {receivePlace} from '../actions/place';
+import {setQueryAndPlaceFromUrl} from '../actions/searchQuery';
+import ResultPanel from '../containers/ResultPanel';
+import SearchBox from '../containers/SearchBox';
+import SearchMap from '../containers/SearchMap';
+import {trackOutboundLink, trackSearchComplete} from '../ga.js';
 
 
 const initialZoom = 8;
