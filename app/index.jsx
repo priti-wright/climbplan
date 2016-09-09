@@ -17,7 +17,8 @@ import {
 import {initGA} from './ga.js';
 
 import reducers from './reducers';
-import SearchPage from './containers/SearchPage';
+import IntroPage from './components/IntroPage';
+import ResultsPage from './components/ResultsPage';
 import {setQueryAndPlaceFromUrlIfNeeded} from './actions/searchQuery';
 
 // not sure why the tmpl.html bootstrap doesn't work; let's just bootstrap ourselves in anyway
@@ -52,10 +53,10 @@ const getFetchPlace = dispatch => {
 
 const SiteRouter = props => (
     <Router history={history}>
-        <Route path="/" component={SearchPage} />
+        <Route path="/" component={IntroPage} />
         <Route
             path="search/:placeName/:placeLat/:placeLon"
-            component={SearchPage}
+            component={ResultsPage}
             onEnter={getFetchPlace(props.dispatch)}
         />
     </Router>
