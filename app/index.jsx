@@ -23,7 +23,7 @@ import {setQueryAndPlaceFromUrlIfNeeded} from './actions/searchQuery';
 
 // not sure why the tmpl.html bootstrap doesn't work; let's just bootstrap ourselves in anyway
 document.body.innerHTML += '\
-    <title>Climb Plan</title>\
+    <title>ClimbPlan</title>\
         <div id="target-summary"></div>\
         <div id="research-title"></div>\
         <div id="research-suggestions"></div>\
