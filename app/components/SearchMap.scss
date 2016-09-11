@@ -33,7 +33,7 @@ $results-page-map-height: 1000px;
 }
 
 .mapFadeCover {
-    $fade-cover-height: 600px;
+    $fade-cover-height: 400px;
     position: absolute;
     top: $results-page-map-height - $fade-cover-height;
     height: $fade-cover-height;

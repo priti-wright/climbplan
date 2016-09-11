@@ -14,29 +14,30 @@ function visuallyCenter(map, placeLatLng) {
 
 function goToPlace(placeName, placeLatLng, map) {
     visuallyCenter(map, placeLatLng);
-    new google.maps.Marker({
+    const markerOptions = {
         map: map,
         title: placeName,
         position: placeLatLng,
+    };
+    new google.maps.Marker({
+        ...markerOptions,
+        zIndex: 2,
         icon: {
             path: google.maps.SymbolPath.CIRCLE,
             scale: 35,
-            strokeColor: 'green',
+            strokeColor: 'hsl(163, 100%, 30%)',
             strokeWeight: 3,
-            zIndex: 2,
         },
     });
     new google.maps.Marker({
-        map: map,
-        title: placeName,
-        position: placeLatLng,
+        ...markerOptions,
+        zIndex: 1,
         icon: {
             path: google.maps.SymbolPath.CIRCLE,
             scale: 30,
             strokeColor: 'white',
             strokeOpacity: 0.5,
             strokeWeight: 10,
-            zIndex: 1,
         },
     });
 }
