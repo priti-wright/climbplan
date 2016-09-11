@@ -17,9 +17,9 @@ const queryUpdated = (value, dispatch) => {
 };
 
 
-const renderAutocompleteMenu = (items, value, style) => {
+const renderAutocompleteMenu = (items, value) => {
     if (items.length) {
-        return <div className={searchBoxStyles.menu} style={style} children={items} />;
+        return <div className={searchBoxStyles.menu} children={items} />;
     }
     return <span />;
 };
@@ -48,33 +48,35 @@ const searchBox = React.createClass({
     render() {
         const {autoFocus, className, dispatch, matches, query} = this.props;
         return (
-            <Autocomplete
-                inputProps={{
-                    name: 'Mountain Search',
-                    className: styles.controls,
-                    type: 'text',
-                    placeholder: '🔍    Search for a mountain!   (e.g. "Forbidden Peak")',
-                    autoFocus,
-                }}
-                wrapperProps={{className}}
-                value={query}
-                items={matches}
-                onChange={(event, newText) => queryUpdated(newText, dispatch)}
-                onSelect={(event, selectedPlace) => {
-                    dispatch(receiveQuery(selectedPlace.name));
-                    dispatch(receivePlace(selectedPlace));
-                }}
-                getItemValue={item => item.name}
-                renderItem={(item, isHighlighted) => (
-                    <div
-                        className={isHighlighted ? styles.selected : styles.deselected}
-                        style={{height: '3em', padding: '1em'}}
-                        key={item.id}
-                        id={item.name}
-                    >{item.name} <small>{item.areaName}</small></div>
-                )}
-                renderMenu={renderAutocompleteMenu}
-            />
+            <div className={className}>
+                <Autocomplete
+                    inputProps={{
+                        name: 'Mountain Search',
+                        className: styles.controls,
+                        type: 'text',
+                        placeholder: '🔍    Search for a mountain!   (e.g. "Forbidden Peak")',
+                        autoFocus,
+                    }}
+                    wrapperProps={{className: searchBoxStyles.wrapper}}
+                    value={query}
+                    items={matches}
+                    onChange={(event, newText) => queryUpdated(newText, dispatch)}
+                    onSelect={(event, selectedPlace) => {
+                        dispatch(receiveQuery(selectedPlace.name));
+                        dispatch(receivePlace(selectedPlace));
+                    }}
+                    getItemValue={item => item.name}
+                    renderItem={(item, isHighlighted) => (
+                        <div
+                            className={isHighlighted ? styles.selected : styles.deselected}
+                            style={{height: '3em', padding: '1em'}}
+                            key={item.id}
+                            id={item.name}
+                        >{item.name} <small>{item.areaName}</small></div>
+                    )}
+                    renderMenu={renderAutocompleteMenu}
+                />
+            </div>
         );
     },
 });
