@@ -1,4 +1,6 @@
-$dark-color: hsl(163, 100%, 30%);
+@import '../css/_colors';
+
+$results-page-map-height: 1000px;
 
 .controls {
   border: 1px solid transparent;
@@ -7,7 +9,7 @@ $dark-color: hsl(163, 100%, 30%);
   -moz-box-sizing: border-box;
   height: 40px;
   outline: none;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 
   background-color: #fff;
   font-family: Roboto;
@@ -23,11 +25,20 @@ $dark-color: hsl(163, 100%, 30%);
 }
 
 .mapCanvasSearched {
-  height: 400px;
+  height: $results-page-map-height;
 }
 
 .mapCanvasIntro {
   height: 1000px;
+}
+
+.mapFadeCover {
+    $fade-cover-height: 600px;
+    position: absolute;
+    top: $results-page-map-height - $fade-cover-height;
+    height: $fade-cover-height;
+    background: linear-gradient(to bottom, rgba(125, 185, 232, 0) 0%, $light-color 100%);
+    width: 100%;
 }
 
 
@@ -40,27 +51,7 @@ $dark-color: hsl(163, 100%, 30%);
 }
 
 .searchBoxSearched {
-  width: 100%;
-}
-
-.searchBoxIntro {
-  $search-box-intro-width: 500px;
-  top: 40%;
-
-  @media screen and (min-device-width: 501px) {
-    position: absolute;
-    display: inline-block;
-    width: $search-box-intro-width;
-    margin-left: $search-box-intro-width * -0.5;
-  }
-
-  @media screen and (max-device-width: 500px) {
-    width: 90%;
-    position: relative;
-    position: fixed;
-    width: 90%;
-    left: 5%;
-  }
+  composes: hoverOver from './ResultPanel.scss';
 }
 
 .selected {

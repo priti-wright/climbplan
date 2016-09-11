@@ -6,22 +6,39 @@ const initialZoom = 8;
 const closeZoom = 13;
 GoogleMapsLoader.KEY = 'AIzaSyARGjjjbuHuxEgPU9BajclhyCWmiW5i9RI';
 
-function goToPlace(placeName, placeLatLon, map) {
-    map.setCenter(placeLatLon);
+function visuallyCenter(map, placeLatLng) {
+    map.setCenter(placeLatLng);
     map.setZoom(closeZoom);
+    map.panBy(0, 300); // Bump because the center of the map !== the visually highlighted spot in the UI
+}
+
+function goToPlace(placeName, placeLatLng, map) {
+    visuallyCenter(map, placeLatLng);
     new google.maps.Marker({
         map: map,
         title: placeName,
-        position: placeLatLon,
+        position: placeLatLng,
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 35,
+            strokeColor: 'green',
+            strokeWeight: 3,
+            zIndex: 2,
+        },
+    });
+    new google.maps.Marker({
+        map: map,
+        title: placeName,
+        position: placeLatLng,
         icon: {
             path: google.maps.SymbolPath.CIRCLE,
             scale: 30,
             strokeColor: 'white',
             strokeOpacity: 0.5,
             strokeWeight: 10,
+            zIndex: 1,
         },
     });
-    map.panBy(0, 70); // Just a lil visual bump
 }
 
 const SearchMap = React.createClass({
@@ -70,7 +87,7 @@ const SearchMap = React.createClass({
     handleResize() {
         const {lat, lon} = this.props.place;
         if (this.state.map && this.props.place.id) {
-            this.state.map.setCenter({lat, lng: lon});
+            visuallyCenter(this.state.map, {lat, lng: lon});
         }
     },
     render() {

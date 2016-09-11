@@ -3,7 +3,7 @@ import _ from 'lodash';
 import ReactTooltip from 'react-tooltip';
 import {trackOutboundLink} from '../ga';
 
-import ResultBox from './ResultBox';
+import ContainerWithTitle from './ContainerWithTitle';
 import styles from './ResearchSuggestions.scss';
 
 
@@ -118,7 +118,7 @@ const ResearchSuggestions = props => {
     );
 
     return (
-        <ResultBox title={`${place.name} Research`}>
+        <ContainerWithTitle title={`${place.name} Research`}>
             {groupElements}
             <ReactTooltip
                 place="bottom"
@@ -126,7 +126,7 @@ const ResearchSuggestions = props => {
                 effect="solid"
                 className={styles.researchSuggestionsTooltip}
             />
-        </ResultBox>
+        </ContainerWithTitle>
     );
 };
 

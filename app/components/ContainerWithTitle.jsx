@@ -1,8 +1,8 @@
 import React from 'react';
 
-import styles from './ResultBox.scss';
+import styles from './ContainerWithTitle.scss';
 
-const ResultBox = props => {
+const ContainerWithTitle = props => {
     return (
         <div className={styles.resultBox}>
             <h1 className={styles.sectionTitle}>{props.title}</h1>
@@ -13,9 +13,9 @@ const ResultBox = props => {
     );
 };
 
-ResultBox.propTypes = {
+ContainerWithTitle.propTypes = {
     children: React.PropTypes.node,
     title: React.PropTypes.string,
 };
 
-export default ResultBox;
+export default ContainerWithTitle;

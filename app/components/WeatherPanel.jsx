@@ -1,12 +1,12 @@
 import React from 'react';
 
-import ResultBox from './ResultBox';
+import ContainerWithTitle from './ContainerWithTitle';
 
 
 const WeatherPanel = props => {
     const widgetUrl = `http://forecast.io/embed/#lat=${props.place.lat}&lon=${props.place.lon}&name=${props.place.name}`;
     return (
-        <ResultBox title="Weather">
+        <ContainerWithTitle title="Weather">
             <iframe
                 id="forecast_embed"
                 type="text/html"
@@ -16,7 +16,7 @@ const WeatherPanel = props => {
                 src={widgetUrl}
                 key={widgetUrl}
             />
-        </ResultBox>
+        </ContainerWithTitle>
     );
 };
 

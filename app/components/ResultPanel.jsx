@@ -9,10 +9,10 @@ import styles from './ResultPanel.scss';
 
 const FeedbackMessage = () => {
     return (
-        <p>
+        <div className={styles.footer}>
         Thanks for playing!
         Drop us some <a href="https://docs.google.com/document/d/1s91RrNYWmucPVacHv7GkcTUHQmXTvpcIk0xGPHxJZ3A/edit?usp=sharing" target="_new">feedback</a>!
-        </p>
+        </div>
     );
 };
 
@@ -24,8 +24,8 @@ const ResultPanel = props => {
                 <ResearchSuggestions place={props.place} />
                 <WeatherPanel />
                 <TripReportResults />
+                <FeedbackMessage />
             </div>
-            <FeedbackMessage />
         </div>;
 
     return <div>{content}</div>;

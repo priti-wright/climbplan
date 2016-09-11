@@ -1,3 +1,41 @@
 .splashBox {
-    
+    @import '../css/_colors';
+    @import '../css/_shadows';
+    $splash-box-width: 500px;
+
+    composes: bigShadow from '../css/_shadows';
+    background-color: $dark-color;
+    color: $light-text-color;
+
+    z-index: 2; // Unfortunately necessary to show on top of the map
+
+    subtitle {
+        line-height: 4em;
+        font-weight: lighter;
+        font-size: 20px;
+    }
+
+    @media screen and (min-device-width: 501px) {
+        position: absolute;
+        display: inline-block;
+        width: $splash-box-width;
+        left: 50%;
+        top: 40%;
+        margin-left: $splash-box-width * -0.5;
+    }
+
+    @media screen and (max-device-width: 500px) {
+        position: fixed;
+        width: 94%;
+        left: 3%;
+        top: 1.5em;
+    }
+}
+
+
+.searchBox {
+    width: 100%;
+    padding: 2em;
+    padding-top: 0px;
+    color: black;
 }

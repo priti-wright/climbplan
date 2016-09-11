@@ -1,8 +1,9 @@
 import React from 'react';
 
-import SearchBox from '../containers/SearchBox';
+import SplashBox from '../components/SplashBox';
 import SearchMap from '../containers/SearchMap';
-import styles from './SearchMap.scss';
+import styles from './IntroPage.scss';
+import searchMapStyles from './SearchMap.scss';
 
 
 const IntroPage = React.createClass({
@@ -12,8 +13,8 @@ const IntroPage = React.createClass({
     render() {
         return (
             <div>
-              <SearchBox className={styles.searchBoxIntro} autoFocus />
-              <SearchMap onResultPage={false} className={styles.mapCanvasIntro} />
+                <SplashBox />
+                <SearchMap onResultPage={false} className={searchMapStyles.mapCanvasIntro} />
             </div>
         );
     },

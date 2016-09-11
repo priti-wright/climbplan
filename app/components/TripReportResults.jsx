@@ -5,7 +5,7 @@ import loadingIndicatorImage from '../static/loadingIndicator.gif';
 import {fetchTripReports} from '../actions/tripReports';
 import {trackOutboundLink} from '../ga';
 import styles from './TripReportResults.scss';
-import ResultBox from './ResultBox';
+import ContainerWithTitle from './ContainerWithTitle';
 
 
 const tripReportProp = React.PropTypes.shape({
@@ -90,12 +90,12 @@ export const TripReportResults = React.createClass({
         );
 
         return (
-            <ResultBox title="Trip Reports">
+            <ContainerWithTitle title="Trip Reports">
                 {description}
                 <ul className={styles.tripReportList}>
                     {reportLinks}
                 </ul>
-            </ResultBox>
+            </ContainerWithTitle>
         );
     },
 });

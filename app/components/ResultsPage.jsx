@@ -21,6 +21,7 @@ const ResultsPage = React.createClass({
             <div>
               <SearchBox className={styles.searchBoxSearched} />
               <SearchMap className={styles.mapCanvasSearched} onResultPage />
+              <div className={styles.mapFadeCover} />
               <ResultPanel />
             </div>
         );

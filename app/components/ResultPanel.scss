@@ -1,29 +1,45 @@
+.hoverOver {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    
+    width: 90%;
+    margin-left: 5%;
+}
+
 .mainContent {
-    margin: -150px 10% 0px 10%;
-    width: 80%;
-    position: relative;
+    composes: hoverOver;
+    margin-top: 340px; // Get out of the way of the map
     text-align: left;
 
-   @media (min-width: 900px) {
-       display: block;
-   }
-   @media (min-width: 900px) {
-       display: flex;
-       flex-wrap: wrap;
-       justify-content: space-between;
-       > div {
-           flex-basis: 47%;
-       }
-       > :nth-child(3) {
-           margin-top: 20px;
-           flex-grow: 1;
-       }
-       > :nth-last-child(1) {
-           margin-right: 0px;
-       }
+    @media (min-width: 900px) {
+        display: block;
+    }
+    @media (min-width: 900px) {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        > div {
+            flex-basis: 47%;
+        }
+        > :nth-child(3) {
+            margin-top: 20px;
+            flex-grow: 1;
+        }
+        > :nth-last-child(1) {
+            margin-right: 0px;
+        }
 
-       > :last-child {
-           margin-bottom: 16px;
-       }
-   }
+        > :last-child {
+            margin-bottom: 16px;
+        }
+    }
+
+    .footer {
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        color: white;
+        z-index: 1;
+    }
 }
