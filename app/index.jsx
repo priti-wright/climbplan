@@ -21,14 +21,6 @@ import IntroPage from './components/IntroPage';
 import ResultsPage from './components/ResultsPage';
 import {setQueryAndPlaceFromUrlIfNeeded} from './actions/searchQuery';
 
-// not sure why the tmpl.html bootstrap doesn't work; let's just bootstrap ourselves in anyway
-document.body.innerHTML += '\
-    <title>ClimbPlan</title>\
-        <div id="target-summary"></div>\
-        <div id="research-title"></div>\
-        <div id="research-suggestions"></div>\
-        <div id="footer"></div>\
-        <div id="app"></div>';
 
 initGA();
 
@@ -75,5 +67,5 @@ const App = (
 
 ReactDOM.render(
   App,
-  document.getElementById('app')
+  document.body
 );
