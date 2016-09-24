@@ -6,7 +6,7 @@ const mapStateToProps = (state, ownProps) => {
     return {
         autoFocus: ownProps.autoFocus,
         place: state.place,
-        matches: state.searchMatches,
+        matches: state.searchMatches.matches,
         query: state.searchQuery,
         className: ownProps.className,
     };

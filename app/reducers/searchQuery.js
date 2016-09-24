@@ -1,6 +1,6 @@
 import {RECEIVE_QUERY} from '../actions/searchQuery';
 
-const searchMatches = (state = '', action) => {
+const searchQuery = (state = '', action) => {
     switch (action.type) {
         case RECEIVE_QUERY:
             return action.query;
@@ -9,4 +9,4 @@ const searchMatches = (state = '', action) => {
     }
 };
 
-export default searchMatches;
+export default searchQuery;
