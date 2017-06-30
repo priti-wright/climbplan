@@ -1,5 +1,5 @@
 import {REQUEST_TRIP_REPORTS, RECEIVE_TRIP_REPORTS} from '../actions/tripReports';
-import valueWithNewerQueryTime from './valueWithNewerQueryTime';
+import stateWithNewerQueryTime from './stateWithNewerQueryTime';
 
 
 const tripReports = (state = {items: [], isFetching: false, queryTime: Date()}, action) => {
@@ -11,7 +11,7 @@ const tripReports = (state = {items: [], isFetching: false, queryTime: Date()}, 
                 queryTime: state.queryTime,
             };
         case RECEIVE_TRIP_REPORTS:
-            return valueWithNewerQueryTime(
+            return stateWithNewerQueryTime(
                 state,
                 {
                     items: action.tripReports,

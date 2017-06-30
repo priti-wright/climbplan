@@ -1,5 +1,3 @@
-
-
 function stateWithNewerQueryTime(oldState, potentialNewState) {
     // The potentialNewState could be stale because API calls don't always come back in the order they were sent.
     // As a result, only update the state if the data comes from a newer query than what we already have.
