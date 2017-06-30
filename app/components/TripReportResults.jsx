@@ -73,12 +73,12 @@ export const TripReportResults = React.createClass({
     render() {
         const description = this.props.isFetching ? (
           <div className={styles.tripReportsLoadingIndicator}>
-              Searching Peakbagger, SummitPost and CascadeClimbers...
+              Searching Peakbagger, SummitPost, CascadeClimbers, and NW Hikers...
               <br />
               <img src={loadingIndicatorImage} />
           </div>
         ) : (
-          <span className={styles.tripReportsInfo}>From Peakbagger, SummitPost and Cascade Climbers</span>
+          <span className={styles.tripReportsInfo}>From Peakbagger, SummitPost, Cascade Climbers, and NW Hikers</span>
         );
 
         const reports = this.props.tripReports;
