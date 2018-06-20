@@ -18,6 +18,7 @@ import {initGA} from './ga.js';
 
 import reducers from './reducers';
 import IntroPage from './components/IntroPage';
+import WeatherPageContainer from './components/WeatherPage';
 import ResultsPage from './components/ResultsPage';
 import {setQueryAndPlaceFromUrlIfNeeded} from './actions/searchQuery';
 
@@ -48,6 +49,7 @@ const getFetchPlace = dispatch => {
 const SiteRouter = props => (
     <Router history={history}>
         <Route path="/" component={IntroPage} />
+        <Route path="weather" component={WeatherPageContainer} />
         <Route
             path="search/:placeName/:placeLat/:placeLon"
             component={ResultsPage}

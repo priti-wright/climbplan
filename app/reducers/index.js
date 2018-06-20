@@ -3,6 +3,7 @@ import tripReports from './tripReports';
 import place from './place';
 import searchMatches from './searchMatches';
 import searchQuery from './searchQuery';
+import weather from './weather';
 
 
 export default combineReducers({
@@ -10,4 +11,5 @@ export default combineReducers({
     place,
     searchMatches,
     searchQuery,
+    weather,
 });

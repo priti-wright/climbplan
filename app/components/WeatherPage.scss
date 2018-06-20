@@ -1,0 +1,20 @@
+@import '../css/_colors';
+
+
+.span {
+  display: inline-block;
+}
+
+.accordion {
+  background: $light-color;
+  overflow: hidden;
+}
+
+.title {
+  color: #fff;
+  background: $dark-color;
+  text-align: center;
+  font-weight: 700;
+  line-height: 1.2em;
+  padding: 1em;
+}

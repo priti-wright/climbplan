@@ -35,8 +35,8 @@ export function post(url, data) {
    .catch(error => handleError(`An API failure occured while posting JSON to "${url}"`, error));
 }
 
-export function get(url) {
-    return fetch(url)
+export function get(url, header_params={}) {
+    return fetch(url, {headers: header_params})
       .then(handleResponse)
       .catch(error => handleError(`An API failure occured while posting JSON to "${url}"`, error));
 }
