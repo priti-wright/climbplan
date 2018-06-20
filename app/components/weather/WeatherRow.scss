@@ -1,10 +1,11 @@
 .day {
     display: inline-block;
-    width: 90px;
+    width: 98px;
+    vertical-align: top;
 }
 
 .days {
-    margin: 0 0 0 90px;
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 .place {
@@ -15,6 +16,4 @@
 }
 
 .row {
-    flex-basis: 100% !important;
-    flex-grow: 1;
 }

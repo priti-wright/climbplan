@@ -75,12 +75,12 @@ const WeatherCell = React.createClass({
         const flag = parseFloat(precip) > 1;
         const wind = parseWind(this.props.windSpeed);
         return (
-            <div className={styles.span}>
+            <td className={styles.span}>
                 <img src={this.props.icon} className={styles.weatherIcon} />
                 <div className={styles.precip} style={{color: flag ? '#f00' : '#fff'}}>{precip}</div>
                 
-                <div className={styles.windcell} style={{color: wind > 15 ? '#f00' : '#fff'}}>{wind}</div>
-            </div>
+                <div className={styles.windspeed} style={{color: wind > 15 ? '#f00' : '#fff'}}>{wind}</div>
+            </td>
         );
     },
 });

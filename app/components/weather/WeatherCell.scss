@@ -1,34 +1,28 @@
 .span {
     display: inline-block;
+    padding: 0px 4px;
 }
 
 .weatherIcon{
-	padding: 6px;	
   height: 90px;
 }
 
 %data {
   width: 90px;
-  /* height: 36px; */
-  display: table-cell;
+  height: 24px;
   font-size: 12px;
   font-family: Arial, sans-serif;
   font-weight: bold;
   color: #fff;
-  line-height: 36px;
+  line-height: 24px;
 }
 
-.windcell {
+.windspeed {
   @extend %data;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 .precip {
   @extend %data;
-  width: 90px;
-  height: 14px;
   overflow: scroll;
-  font-family: Arial, sans-serif;
-  font-weight: bold;
-  font-size: 12px;
 }

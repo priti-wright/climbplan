@@ -4,7 +4,9 @@ import {get} from './request';
 const WEATHER_GOV_URL = 'https://api.weather.gov/points/';
 
 function parseForecastResult(name, lat, lon, forecastResult) {
-    const weather = {};
+    const weather = {
+        'periods': forecastResult.properties.periods
+    };
     weather[name] = {
         name: name,
         lat: Number(lat),

@@ -14,6 +14,7 @@ const weather = (state = {areas: {}, isFetching: false, queryTime: Date()}, acti
             return stateWithNewerQueryTime(
                 state,
                 {
+                    periods: action.weather.periods,
                     areas: Object.assign(action.weather, state.areas),
                     isFetching: false,
                     queryTime: action.queryTime,

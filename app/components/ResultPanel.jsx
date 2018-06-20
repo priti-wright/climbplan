@@ -4,7 +4,7 @@ import _ from 'lodash';
 import TripReportResults from '../containers/TripReports';
 import ResearchSuggestions from './ResearchSuggestions';
 import WeatherPanel from '../containers/WeatherPanel';
-import WeatherRow from './weather/AreaRow';
+import WeatherTable from './weather/WeatherTable';
 import styles from './ResultPanel.scss';
 
 
@@ -25,7 +25,9 @@ const ResultPanel = props => {
                 <ResearchSuggestions place={props.place} />
                 <WeatherPanel />
                 <TripReportResults />
-                <WeatherRow area={props.place} topRow={true} />
+                <div className={styles.weather}>
+                    <WeatherTable areas={[props.place]} />
+                </div>
                 <FeedbackMessage />
             </div>
         </div>;
