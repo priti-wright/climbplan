@@ -19,8 +19,12 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        > div {
+
+        > :nth-child(1), :nth-child(2) {
             flex-basis: 47%;
+        }
+        > div {
+            /* flex-basis: 47%; */
         }
         > :nth-child(3) {
             margin-top: 20px;
@@ -36,7 +40,6 @@
     }
 
     .weather {
-        margin: 0px -16px;
         flex: none;
     }
 

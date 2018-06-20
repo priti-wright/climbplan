@@ -25,7 +25,7 @@ const Section = React.createClass({
   render: function() {
     return (
       <div className={this.state.class}>
-        <button>toggle</button>
+        <button></button>
         <div className={styles.sectionhead} onClick={this.handleClick}>{this.props.title}</div>
         <div className={styles.articlewrap}>
           <div className={styles.article}>

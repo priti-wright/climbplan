@@ -1,0 +1,18 @@
+$dark-color: hsl(163, 100%, 30%);
+
+.sectionTitle {
+  text-align: center;
+  background-color: $dark-color;
+  display: inline-block;
+  width: 100%;
+}
+
+.weatherTable {
+  display: inline-block;
+  margin-bottom: 40px;
+  padding: 0px;
+  width: 100%;
+  background-color: white;
+
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}

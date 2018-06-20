@@ -24,10 +24,10 @@ const ResultPanel = props => {
             <div className={styles.mainContent}>
                 <ResearchSuggestions place={props.place} />
                 <WeatherPanel />
-                <TripReportResults />
                 <div className={styles.weather}>
                     <WeatherTable areas={[props.place]} />
                 </div>
+                <TripReportResults />
                 <FeedbackMessage />
             </div>
         </div>;

@@ -1,7 +1,6 @@
 import React from 'react';
 
 import styles from './WeatherCell.scss';
-import windImage from '../../static/wind.compile_large.png';
 
 
 function parseWind(wind) {
@@ -24,7 +23,7 @@ function parsePrecip(forecastDetails) {
             if (details.includes('tenth of an inch') || details.includes('half inch'))
                 return '<.1';
             if (details.includes('half an inch') || details.includes('half inch'))
-                return '<.5';
+                return '<½';
             if (details.includes('one inch'))
                 return '<1';
         }
@@ -37,15 +36,16 @@ function parsePrecip(forecastDetails) {
     // not tested 
     if (details.match(/(amounts between a.+ )(.+ )( and )(.+ )( of an inch)/g)) {
         const inches = details.match(/(amounts between a.+ )(.+ )( and )(.+ )( of an inch)/i);
-        if (inches[4] == 'tenth')
+        const precip_amount = inches[4];
+        if (precip_amount == 'tenth')
             return '<.1';
-        if (inches[4] == 'quarter')
-            return '<.25';
-        if (inches[4] == 'half')
-            return '<.5';
-        if (inches[4] == 'three quarters')
-            return '<.75';
-        if (inches[4] == 'one')
+        if (precip_amount == 'quarter')
+            return '<¼';
+        if (precip_amount == 'half')
+            return '<½';
+        if (precip_amount == 'three quarters')
+            return '<¾';
+        if (precip_amount == 'one')
             return '<1';
     }
     if (details.includes('rain')) {
@@ -77,9 +77,9 @@ const WeatherCell = React.createClass({
         return (
             <td className={styles.span}>
                 <img src={this.props.icon} className={styles.weatherIcon} />
-                <div className={styles.precip} style={{color: flag ? '#f00' : '#fff'}}>{precip}</div>
+                <div className={styles.precip} style={{color: flag ? '#f00' : '#000'}}>{precip}</div>
                 
-                <div className={styles.windspeed} style={{color: wind > 15 ? '#f00' : '#fff'}}>{wind}</div>
+                <div className={styles.windspeed} style={{color: wind > 15 ? '#f00' : '#000'}}>{wind}</div>
             </td>
         );
     },
